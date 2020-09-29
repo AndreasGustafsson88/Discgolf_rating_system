@@ -15,15 +15,20 @@ DRIVER_PATH = "C:\Program Files (x86)\Webdrivers\chromedriver.exe"
 
 
 class Course:
-    def __init__(self, name, location, event_link, num_holes=18):
+    def __init__(self, name, location, num_holes=18):
         self.name = name
         self.location = location
         self.num_holes = num_holes
-        self.event_link = event_link
-        self.raw_data = download("https://www.pdga.com/tour/event/46819")
-        self.clean_data = handle_data.convert_to_int(handle_data.clean_raw_data(self.raw_data))
-        self.latest_scores, self.latest_rating = handle_data.split_list(self.clean_data)
-        self.rating = self.calculate_rating()
+        self.data = []
+        self.latest_scores, self.latest_rating = [], []
+
+    def get_data(self, link):
+        print("Getting raw data")
+        raw_data = download(link)
+        clean_data = handle_data.clean_raw_data(raw_data)
+        clean_data_int = handle_data.convert_to_int(clean_data)
+        self.latest_scores, self.latest_rating = handle_data.split_list(clean_data_int)
+        print("Data download complete!")
 
     # Make latest_score & latest_rating iterable
     def __str__(self):
@@ -37,7 +42,10 @@ class Course:
         return convert_ratings_to_dict(self.latest_rating, self.latest_scores)
 
     def store_data(self):
-        pass # pickle
+        pass  # pickle
+
+    def load_data(self):
+        pass
 
 
 def main():

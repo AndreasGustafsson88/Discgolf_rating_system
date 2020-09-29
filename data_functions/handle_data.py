@@ -9,7 +9,7 @@ import numpy as np
 
 
 def clean_raw_data(raw_data, pdga_numbers=False):
-    temp_data = [item.split() for item in raw_data[1].split("\n")]
+    temp_data = [item.split() for i in range(1, len(raw_data)) for item in raw_data[i].split("\n")]
 
     if not pdga_numbers:
         return [[i[6], i[4], i[8], i[4]] if len(i) > 9 else ["Invalid"] for i in temp_data]
@@ -28,9 +28,13 @@ def split_list(s):  # Split into two list that can represent x, y graph in Matpl
 
 def convert_ratings_to_dict(rating, score): # make 1 func to calculate average? it´s being used in two places
     coef = np.polyfit(rating, score, 1)
-    predicted_ratings = [i for i in range(700, 1040)]
+    predicted_ratings = [i for i in range(650, 1040)]
     predicted = list(map(int, np.polyval(coef, predicted_ratings)))
 
     return {predicted[i]: predicted_ratings[i] for i in range(len(predicted))}
+
+
+
+
 
 
