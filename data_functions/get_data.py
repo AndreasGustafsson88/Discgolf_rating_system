@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import csv
 from collections import defaultdict
-import pickle
 
 DRIVER_PATH = "C:\Program Files (x86)\Webdrivers\chromedriver.exe"
 PLAYER_PATH = "C:\Kod\Projekt\Handicap system for Discgolf\Player_data"
@@ -28,5 +27,4 @@ def read_csv(name):
     return {key: dict1[key] for key in sorted(dict1)}
 
 
-def calculate_rating():
-    pass
+

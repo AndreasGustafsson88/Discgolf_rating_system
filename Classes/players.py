@@ -16,8 +16,8 @@ class Player:
         self.player_scores = read_csv(file_name)
         return self.player_scores
 
-    def enter_data(self, data):
-        self.player_scores = data
+    def enter_data(self, name, result):
+        self.player_scores = {name: result}
         return self.player_scores
 
     def calc_average(self):

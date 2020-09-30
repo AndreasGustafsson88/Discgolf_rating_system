@@ -1,7 +1,9 @@
+import pickle
 from data_functions import handle_data
 from data_functions.get_data import download
 from data_functions.graph_rating_score import plot_data
 from data_functions.handle_data import convert_ratings_to_dict
+from data_functions.store_data import store_course_data, course_data
 
 DRIVER_PATH = "C:\\Program Files (x86)\\Webdrivers\\chromedriver.exe"
 
@@ -34,9 +36,9 @@ class Course:
     def calculate_rating(self):
         return convert_ratings_to_dict(self.latest_rating, self.latest_scores)
 
-    def store_data(self):
-        pass  # pickle
+    def store_data(self, event_link):
+        store_course_data(self.name, self.latest_rating, self.latest_scores, event_link)
 
-    def load_data(self):
-        pass
+    def load_data(self, event_link):
+        self.latest_rating, self.latest_scores = course_data(self.name, event_link)
 
