@@ -1,9 +1,8 @@
-import pickle
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import csv
 from collections import defaultdict
-
+import pickle
 
 DRIVER_PATH = "C:\Program Files (x86)\Webdrivers\chromedriver.exe"
 PLAYER_PATH = "C:\Kod\Projekt\Handicap system for Discgolf\Player_data"
@@ -21,14 +20,13 @@ def download(event_link, element_class="table-container",  headless=True):
 
 def read_csv(name):
     dict1 = defaultdict(list)
-    with open(f"{PLAYER_PATH}\\{name}.csv") as score_card:
+
+    with open(f"{PLAYER_PATH}\\{name}.csv", "r") as score_card:
         for i in csv.reader(score_card):
-            if name in i[0]:
+            if name.lower() in i[0].lower():
                 dict1[i[1]].append(int(i[4]))
     return {key: dict1[key] for key in sorted(dict1)}
 
 
 def calculate_rating():
     pass
-
-
