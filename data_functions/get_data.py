@@ -20,7 +20,7 @@ def download(event_link, element_class="table-container",  headless=True):
 def read_csv(name):
     dict1 = defaultdict(list)
 
-    with open(f"{PLAYER_PATH}\\{name}.csv", "r") as score_card:
+    with open(f"{PLAYER_PATH}\\{name}.csv", "r", encoding="utf-8") as score_card:
         for i in csv.reader(score_card):
             if name.lower() in i[0].lower():
                 dict1[i[1]].append(int(i[4]))

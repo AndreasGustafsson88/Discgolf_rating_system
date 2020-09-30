@@ -7,18 +7,20 @@ from Classes.players import Player
 
 
 def main():
-    ymer = Course("YMERGÅRDEN", "BORÅS")
+    ymer = Course("Ymergårdens Discgolfcenter", "BORÅS")
     # ymer.get_data("https://www.pdga.com/tour/event/46819")
-    # ymer.plot_data()
     # ymer.store_data("46819")
-    ymer.load_data("46819")
+    ymer.load_data()
+    # ymer.store_data("46819")
     ymer.plot_data()
-    print(ymer.latest_rating)
-    print(ymer.latest_scores)
+    # print(ymer.latest_scores)
+    # print(ymer.calculate_rating())
 
-    andreas = Player("Andreas", "Gustafsson")
-    for item in andreas.player_scores:
-        print(f"{item}: {andreas.player_scores[item]}")
+    # andreas = Player("Andreas", "Gustafsson")
+    # andreas.get_data("andreas")
+    # for key in andreas.player_scores:
+    #     print(f"{key}: {andreas.player_scores[key]}")
+
 
 
 if __name__ == "__main__":

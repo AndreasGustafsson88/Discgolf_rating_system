@@ -26,6 +26,7 @@ class Player:
             average[items] = int(statistics.mean(average[items]))
         return average
 
+    # Onödig function?
     # def calc_average(self): # FÖRKORTA OVANSTOENDE FUNCTION!
     #     average = self.player_scores.copy()
 

@@ -39,6 +39,6 @@ class Course:
     def store_data(self, event_link):
         store_course_data(self.name, self.latest_rating, self.latest_scores, event_link)
 
-    def load_data(self, event_link):
-        self.latest_rating, self.latest_scores = course_data(self.name, event_link)
+    def load_data(self):
+        self.latest_rating, self.latest_scores = course_data(self.name)
 
