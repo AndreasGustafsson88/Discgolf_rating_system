@@ -9,17 +9,18 @@ from Classes.players import Player
 def main():
     ymer = Course("Ymergårdens Discgolfcenter", "BORÅS")
     # ymer.get_data("https://www.pdga.com/tour/event/46819")
-    # ymer.store_data("46819")
-    ymer.load_data()
-    # ymer.store_data("46819")
-    ymer.plot_data()
+    # ymer.save_data("46819")
+    # ymer.load_data()
+    # ymer.save_data("46819")
+    # ymer.plot_data()
     # print(ymer.latest_scores)
     # print(ymer.calculate_rating())
 
-    # andreas = Player("Andreas", "Gustafsson")
+    andreas = Player("Andreas", "Gustafsson")
     # andreas.get_data("andreas")
-    # for key in andreas.player_scores:
-    #     print(f"{key}: {andreas.player_scores[key]}")
+    andreas.load_data()
+
+    print(andreas.calc_rating())
 
 
 

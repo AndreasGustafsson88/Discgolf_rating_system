@@ -2,7 +2,7 @@
 Program that calculates a discgolfcource rating based on previus PDGA competitions on chosen course and layout
 """
 from data_functions import handle_data
-from data_functions.get_data import download
+from data_functions.get_ext_data import download
 from data_functions.graph_rating_score import plot_data
 
 # Temporary added raw_data so program doesn´t have to run Selenium for every test.

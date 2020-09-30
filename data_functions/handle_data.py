@@ -2,7 +2,7 @@ from itertools import chain
 import numpy as np
 
 
-def clean_raw_data(raw_data, pdga_numbers=False):
+def clean_raw_data(raw_data, pdga_numbers=False): # FIX THIS SHIT, lol!!
     temp_data = [item.split() for i in range(1, len(raw_data)) for item in raw_data[i].split("\n")]
 
     if not pdga_numbers:
