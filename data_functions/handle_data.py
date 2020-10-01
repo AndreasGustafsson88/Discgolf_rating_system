@@ -2,13 +2,41 @@ from itertools import chain
 import numpy as np
 
 
-def clean_raw_data(raw_data, pdga_numbers=False): # FIX THIS SHIT, lol!!
-    temp_data = [item.split() for i in range(1, len(raw_data)) for item in raw_data[i].split("\n")]
-
-    if not pdga_numbers:
-        return [[i[6], i[4], i[8], i[4]] if len(i) > 9 else ["Invalid"] for i in temp_data]
+def clean_raw_data(raw_data): # FIX THIS SHIT, lol!!
+    temp1 = [i.split("\n") for i in raw_data[1:]]
+    temp2 = [i.split() for j in [item[1:] for item in temp1] for i in j]
+    result = []
+    res = []
+    if len(temp2[0]) >= 14:
+        for i in temp2:
+            if i[1].isalpha():
+                try:
+                    result.append([i[6], i[4], i[8], i[4], i[4], i[10]])
+                except IndexError:
+                    continue
+            elif not i[1].isalpha():
+                try:
+                    result.append([i[7], i[5], i[9], i[5], i[11], i[5]])
+                except IndexError:
+                    continue
     else:
-        return [[i[6], i[7], i[8], i[9]] if len(i) > 9 else ["Invalid"] for i in temp_data]
+        for i in temp2:
+            if i[1].isalpha():
+                try:
+                    result.append([i[6], i[4], i[8], i[4]])
+                except IndexError:
+                    continue
+            elif not i[1].isalpha():
+                try:
+                    result.append([i[7], i[5], i[9], i[5]])
+                except IndexError:
+                    continue
+
+    for i in result:
+        if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200:
+            res.append(i)
+    print(res)
+    return res
 
 
 def convert_to_int(s):
