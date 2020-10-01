@@ -4,23 +4,31 @@ Program that calculates a discgolfcource rating based on previus PDGA competitio
 
 from Classes.courses import Course
 from Classes.players import Player
+from data_functions.save_and_load import player_data, course_data
 
 
 def main():
     ymer = Course("Ymergårdens Discgolfcenter", "BORÅS")
-    ymer.get_data("https://www.pdga.com/tour/event/42661")
+    # ymer.get_data("https://www.pdga.com/tour/event/39351")
     # ymer.save_data("39351")
-    # ymer.load_data()
     # ymer.save_data("46819")
-    ymer.plot_data()
+
     # print(ymer.latest_scores)
-    # print(ymer.calculate_rating())
+    ymer.load_data()
+    ymer.plot_data()
+    print(ymer.calculate_rating())
 
     # andreas = Player("Andreas", "Gustafsson")
     # andreas.get_data("andreas")
-    # andreas.load_data()
 
-    # print(andreas.calc_rating())
+    andreas = player_data("Andreas Gustafsson")
+    # print(andreas.player_scores)
+    # print(type(andreas))
+    print(andreas.rating)
+    andreas.save_player(andreas)
+    # andreas.load_data()
+    # for key in andreas.player_scores:
+    #     print(f"{key}: {andreas.player_scores[key]}")
 
 
 

@@ -1,5 +1,7 @@
 import pickle
 import os
+from itertools import chain
+
 
 from data_functions.handle_data import convert_ratings_to_dict
 
@@ -19,11 +21,15 @@ def store_course_data(course_name, object1, object2, link):
 
 
 def course_data(course_name):
+    rating, score = [], []
+    score = []
     for path, sub_folder, file_list in os.walk(COURSE_DATA_PATH):
         for name in file_list:
             if course_name in name:
                 with open(os.path.join(path, name), "rb") as file:
-                    return pickle.load(file), pickle.load(file)
+                    rating += pickle.load(file)
+                    score += pickle.load(file)
+    return rating, score
 
 
 def store_player_data(player_name, object1):

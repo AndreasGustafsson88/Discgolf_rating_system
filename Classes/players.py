@@ -13,15 +13,23 @@ class Player:
         self.rating = []
 
     def calc_rating(self):
-        self.rating = get_rating(self.player_scores)
-        return int(statistics.mean(self.rating))
+        self.rating = int(statistics.mean(get_rating(self.player_scores)))
+        return self.rating
 
-    def load_data(self):
+    def load_player1(self):
         self.player_scores = player_data(f"{self.first_name} {self.last_name}")
         return self.player_scores
 
+    @staticmethod
+    def load_player(self, first_name, last_name):
+        name = player_data(f"{first_name} {last_name}")
+        return name
+
     def save_data(self):
         store_player_data(f"{self.first_name} {self.last_name}", self.player_scores)
+
+    def save_player(self, player):
+        store_player_data(f"{self.first_name} {self.last_name}", player)
 
     def get_data(self, file_name):
         self.player_scores = read_csv(file_name)

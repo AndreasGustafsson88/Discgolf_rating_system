@@ -35,7 +35,6 @@ def clean_raw_data(raw_data): # FIX THIS SHIT, lol!!
     for i in result:
         if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200:
             res.append(i)
-    print(res)
     return res
 
 
