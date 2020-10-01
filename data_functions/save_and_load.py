@@ -60,6 +60,5 @@ def get_rating(player_scores):
                     with open(os.path.join(path, name), "rb") as file:
                         average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
                         for i, scores in enumerate(player_scores[key]):
-                            if i < 7:
-                                ratings.append(average[player_scores[key][i]])
+                            ratings.append(average[player_scores[key][i]])
     return ratings
