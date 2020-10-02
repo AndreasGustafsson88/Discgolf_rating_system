@@ -28,17 +28,31 @@ def clean_raw_data(raw_data): # FIX THIS SHIT, lol!!
             except IndexError:
                 continue
 
-    elif "Points" in temp1[0][0]:
+    elif "Points" and "Rd2" in temp1[0][0]:
         for i in temp2:
             try:
                 result.append([i[7], i[5], i[9], i[5]])
             except IndexError:
                 continue
 
-    else:
+    elif "Rd2" in temp1[0][0]:
         for i in temp2:
             try:
                 result.append([i[6], i[4], i[8], i[4]])
+            except IndexError:
+                continue
+
+    elif "Points" in temp1[0][0]:
+        for i in temp2:
+            try:
+                result.append([i[7], i[5]])
+            except IndexError:
+                continue
+
+    else:
+        for i in temp2:
+            try:
+                result.append([i[6], i[4]])
             except IndexError:
                 continue
 
@@ -47,8 +61,12 @@ def clean_raw_data(raw_data): # FIX THIS SHIT, lol!!
             if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200 and 30 < int(i[2]) < 100 and 30 < int(i[6]) < 100:
                 res.append(i)
         except IndexError:
-            if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200 and 30 < int(i[2]):
-                res.append(i)
+            try:
+                if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200 and 30 < int(i[2]) < 100:
+                    res.append(i)
+            except IndexError:
+                if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200:
+                    res.append(i)
 
     return res
 
@@ -64,7 +82,7 @@ def split_list(s):  # Split into two list that can represent x, y graph in Matpl
 
 def convert_ratings_to_dict(rating, score): # make 1 func to calculate average? it´s being used in two places
     coef = np.polyfit(rating, score, 1)
-    predicted_ratings = [i for i in range(650, 1040)]
+    predicted_ratings = [i for i in range(650, 1080)]
     predicted = list(map(int, np.polyval(coef, predicted_ratings)))
 
     return {predicted[i]: predicted_ratings[i] for i in range(len(predicted))}

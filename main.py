@@ -8,13 +8,22 @@ from data_functions.save_and_load import player_data, course_data
 
 
 def main():
-    krokhol = Course("Krokhol Disc Golf Course", "OSLO")
-    # krokhol.get_data("https://www.pdga.com/tour/event/42664")
-    # krokhol.save_data("42664")
-    krokhol.load_data()
-    print(krokhol.calculate_rating())
+    # gässlösa = Course("Gässlösa DGB", "BORÅS")
+    # gässlösa.get_data("https://www.pdga.com/tour/event/40504")
+    # gässlösa.save_data("40504")
+    # gässlösa.load_data()
+    # gässlösa.merge_all()
+    # gässlösa.plot_data()
+    # print(gässlösa.calculate_rating())
+    # krokhol = Course("Krokhol Disc Golf Course", "OSLO")
+    # krokhol.load_data()
+    # krokhol.plot_data()
+    # krokhol.merge_all()
+    # ymer = Course("Ymergårdens Discgolfcenter", "BORÅS")
     # ymer.get_data("https://www.pdga.com/tour/event/39351")
-    # ymer.save_data("39351")
+    # ymer.load_data()
+    # ymer.plot_data()
+    # ymer.merge_all()
     # ymer.save_data("46819")
 
     # print(ymer.latest_scores)
@@ -23,23 +32,25 @@ def main():
     # print(ymer.calculate_rating())
 
     andreas = Player("Andreas", "Gustafsson")
-    # andreas.get_data("andreas")
-    # fred.enter_data("Ymergårdens Discgolfcenter", [70, 75, 80])
+    andreas.get_data("andreas")
+
+
+    andreas.all_overview("andreas")
 
 
     # andreas = player_data("Andreas Gustafsson")
     # print(andreas.player_scores)
     # print(type(andreas))
-    andreas.get_data("andreas")
-    andreas.save_data()
-    andreas.calc_rating()
+    # andreas.get_data("andreas")
+    # andreas.save_data()
+    # andreas.calc_rating()
 
 
-    print(andreas.rating)
+    # print(andreas.rating)
     # andreas.save_player(andreas)
     # andreas.load_data()
-    for key in andreas.player_scores:
-        print(f"{key}: {andreas.player_scores[key]}")
+    # for key in andreas.player_scores:
+    #     print(f"{key}: {andreas.player_scores[key]}")
 
 
 if __name__ == "__main__":

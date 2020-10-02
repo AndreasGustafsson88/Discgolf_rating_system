@@ -1,4 +1,4 @@
-from data_functions.get_ext_data import read_csv
+from data_functions.get_ext_data import read_csv, sort_rounds, course_stats
 import statistics
 
 from data_functions.handle_data import convert_ratings_to_dict
@@ -12,6 +12,23 @@ class Player:
         self.player_scores = {}
         self.rating = []
 
+    @staticmethod
+    def load_player(self, first_name, last_name):
+        name = player_data(f"{first_name} {last_name}")
+        return name
+
+    @staticmethod
+    def all_overview(file_name):
+        all_data = course_stats(file_name)
+        for key in all_data.keys():
+            print(f"{key}: {all_data[key]}")
+
+    @staticmethod
+    def overview(file_name):
+        all_data = read_csv(file_name)
+        for key in all_data.keys():
+            print(f"{key}: {all_data[key]}")
+
     def calc_rating(self):
         self.rating = int(statistics.mean(get_rating(self.player_scores)))
         return self.rating
@@ -20,11 +37,6 @@ class Player:
         self.player_scores = player_data(f"{self.first_name} {self.last_name}")
         return self.player_scores
 
-    @staticmethod
-    def load_player(self, first_name, last_name):
-        name = player_data(f"{first_name} {last_name}")
-        return name
-
     def save_data(self):
         store_player_data(f"{self.first_name} {self.last_name}", self.player_scores)
 
@@ -32,7 +44,7 @@ class Player:
         store_player_data(f"{self.first_name} {self.last_name}", player)
 
     def get_data(self, file_name):
-        self.player_scores = read_csv(file_name)
+        self.player_scores = sort_rounds(file_name)
         return self.player_scores
 
     def enter_data(self, name, result):

@@ -8,7 +8,7 @@ def plot_data(rating, score, course, color="Blue", x_label="RATING", y_label="SC
 
     coef = np.polyfit(rating, score, 1)
 
-    predicted_ratings = [i for i in range(650, 1040)]
+    predicted_ratings = [i for i in range(650, 1080)]
     predicted = np.polyval(coef, predicted_ratings)
 
     plt.xlabel(x_label)
