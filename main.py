@@ -31,11 +31,14 @@ def main():
     # ymer.plot_data()
     # print(ymer.calculate_rating())
 
-    andreas = Player("Andreas", "Gustafsson")
-    andreas.get_data("andreas")
+    karl_persson = Player("Karl", "Persson")
+    karl_persson.load_player1()
+    print(karl_persson.player_scores)
+    karl_persson.calc_rating()
+    # print(andreas.calc_rating())
+    # andreas.overview("andreas")
 
-
-    andreas.all_overview("andreas")
+    # andreas.all_overview("andreas")
 
 
     # andreas = player_data("Andreas Gustafsson")

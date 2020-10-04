@@ -51,15 +51,15 @@ def player_data(player_name):
                     return pickle.load(file)
 
 
-def get_rating(player_scores):
+def get_rating(player_scores, rounds, course):
     ratings = []
     how_many_rounds = 0
     for values in player_scores:
-        if how_many_rounds == 20:
+        if how_many_rounds == rounds:
             return ratings
         for path, sub_folder, file_list in os.walk(COURSE_DATA_PATH):
             for name in file_list:
-                if values[0] in name and "ALL_ROUNDS" in name:
+                if values[0] in name and "ALL_ROUNDS" in name and course in name:
                     with open(os.path.join(path, name), "rb") as file:
                         average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
                         ratings.append(average[values[2]])

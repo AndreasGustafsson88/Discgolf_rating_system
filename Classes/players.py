@@ -29,9 +29,9 @@ class Player:
         for key in all_data.keys():
             print(f"{key}: {all_data[key]}")
 
-    def calc_rating(self):
-        self.rating = int(statistics.mean(get_rating(self.player_scores)))
-        return self.rating
+    def calc_rating(self, rounds=20, course=""):
+        self.rating = int(statistics.mean(get_rating(self.player_scores, rounds, course)))
+        print(self.rating)
 
     def load_player1(self):
         self.player_scores = player_data(f"{self.first_name} {self.last_name}")
@@ -47,8 +47,8 @@ class Player:
         self.player_scores = sort_rounds(file_name)
         return self.player_scores
 
-    def enter_data(self, name, result):
-        self.player_scores = {name: result}
+    def enter_data(self, name, date, result):
+        self.player_scores = [name, date, [result]]
         return self.player_scores
 
     def calc_average(self):
