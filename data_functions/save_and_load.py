@@ -22,7 +22,6 @@ def store_course_data(course_name, object1, object2, link="ALL_ROUNDS"):
 
 def course_data(course_name):
     rating, score = [], []
-    score = []
     for path, sub_folder, file_list in os.walk(COURSE_DATA_PATH):
         for name in file_list:
             if course_name in name:

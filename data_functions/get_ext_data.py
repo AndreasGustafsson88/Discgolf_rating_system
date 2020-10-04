@@ -33,27 +33,15 @@ def sort_rounds(name):
 
 
 def course_stats(name): # WORK IN PROGRESS
-    dict1 = defaultdict(list)
-
+    dict2 = defaultdict(dict)
     with open(f"{PLAYER_PATH}\\{name}.csv", "r", encoding="utf-8") as score_card:
-        index = 0
         for h, i in enumerate(csv.reader(score_card)):
             if "Par" in i[0]:
-                for j in range(24):
-                    dict1[i[1]].append({j + 1: [i[j + 6], []]})
-                    # dict1[i[1]].append({j+1: [i[j + 6], []]})
-                                 # [i[6], []], [i[7], []], [i[8], []], [i[9], []], [i[10], []], [i[11], []], [i[12], []],
-                                 # [i[13], []], [i[14], []], [i[15], []], [i[16], []], [i[17], []], [i[18], []],
-                                 # [i[19], []], [i[20], []], [i[21], []], [i[22], []], [i[23], []],
-                                 # ])
+                if dict2[i[1]] == {}:
+                    for j in range(1, 25):
+                        dict2[i[1]][j] = [i[j+5], []]
             if name.lower() in i[0].lower():
-                dict1[index][0].append(i[4])
-                for count in range(1, 25):
-                    try:
-                        dict1[index][count][1].append(i[count + 5])
-                    except IndexError:
-                        continue
-                index += 1
-    print(dict1)
-    return dict1
+                for j in range(1, 25):
+                    dict2[i[1]][j][1].append(i[j+5])
+    return dict2
 

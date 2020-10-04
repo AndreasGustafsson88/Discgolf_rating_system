@@ -17,11 +17,14 @@ class Player:
         name = player_data(f"{first_name} {last_name}")
         return name
 
-    @staticmethod
-    def all_overview(file_name):
+    @staticmethod # This belongs to its own class? Database, name main?
+    def all_overview(file_name, store=False):
         all_data = course_stats(file_name)
-        for key in all_data.keys():
-            print(f"{key}: {all_data[key]}")
+        if not store:
+            for key in all_data.keys():
+                print(f"{key}: {all_data[key]}")
+        else:
+            return all_data
 
     @staticmethod
     def overview(file_name):
