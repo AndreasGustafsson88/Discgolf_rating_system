@@ -38,10 +38,16 @@ def course_stats(name): # WORK IN PROGRESS
         for h, i in enumerate(csv.reader(score_card)):
             if "Par" in i[0]:
                 if dict2[i[1]] == {}:
-                    for j in range(1, 25):
-                        dict2[i[1]][j] = [i[j+5], []]
+                    try:
+                        for j in range(1, 25):
+                            dict2[i[1]][j] = [i[j+5], []]
+                    except IndexError:
+                        continue
             if name.lower() in i[0].lower():
-                for j in range(1, 25):
-                    dict2[i[1]][j][1].append(i[j+5])
+                try:
+                    for j in range(1, 25):
+                        dict2[i[1]][j][1].append(i[j+5])
+                except KeyError:
+                    continue
     return dict2
 

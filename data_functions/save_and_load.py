@@ -1,7 +1,8 @@
 import pickle
 import os
+import collections.abc
+from collections import defaultdict
 from itertools import chain
-
 
 from data_functions.handle_data import convert_ratings_to_dict
 
@@ -64,3 +65,37 @@ def get_rating(player_scores, rounds, course):
                         ratings.append(average[values[2]])
                         how_many_rounds += 1
     return ratings
+
+
+def store_hole_stats(data, name):
+    with open(f"{COURSE_DATA_PATH}\\Hole_statistics\\{name}.dat", "wb") as file:
+        pickle.dump(data, file)
+
+
+def load_hole_stats():
+    stats = defaultdict()
+    for path, sub_folder, file_list in os.walk(f"{COURSE_DATA_PATH}\\Hole_statistics"):
+        for file in file_list:
+            with open(os.path.join(path, file), "rb") as stored:
+                stored_stats = pickle.load(stored)
+                for k, v in stored_stats.items():
+                    if k not in stats.keys():
+                        stats[k] = stored_stats[k]
+                    else:
+                        for key, val in v.items():
+                            if not val == stats[k][key]:
+                                for num in stored_stats[k][key][1]:
+                                    stats[k][key][1].append(num)
+    return stats
+
+
+def update_dict(d, u):
+    res_dict = defaultdict(dict)
+    for k, v in u.items():
+        if k not in d.keys():
+            d.update(k)
+        else:
+            for key, val in v.items():
+                if not val == d[key]:
+                    d[k][key][1].append(u[k][key][1])
+    return d

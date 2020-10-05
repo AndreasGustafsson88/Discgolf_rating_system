@@ -1,4 +1,5 @@
 from data_functions.get_ext_data import course_stats
+from data_functions.save_and_load import store_hole_stats, load_hole_stats
 
 
 class Database:
@@ -8,14 +9,18 @@ class Database:
         self.courses = []
         self.players = []
 
-    @staticmethod
-    def all_overview(file_name, store=False):
-        all_data = course_stats(file_name)
-        if not store:
-            for key in all_data.keys():
-                print(f"{key}: {all_data[key]}")
-        else:
-            return all_data
+    def all_overview(self, file_name, show=False):
+        self.hole_stats = course_stats(file_name)
+        print("\n".join(f"{key}: {self.hole_stats[key]}" for key in self.hole_stats.keys() if show))
+        return self.hole_stats
+
+    def store_hole_overview(self, name):
+        store_hole_stats(self.hole_stats, name)
+        print("Save successful")
+
+    def load_hole_overview(self):
+        self.hole_stats = load_hole_stats()
+        print("Load successful")
 
     def save_database(self):
         pass
@@ -36,3 +41,8 @@ class Database:
     def show_players(self):
         pass
 
+    def plot_course(self):
+        pass
+
+    def plot_player(self):
+        pass

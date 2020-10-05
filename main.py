@@ -3,6 +3,7 @@ Program that calculates a discgolfcource rating based on previus PDGA competitio
 """
 
 from Classes.courses import Course
+from Classes.database import Database
 from Classes.players import Player
 from data_functions.save_and_load import player_data, course_data
 
@@ -34,15 +35,23 @@ def main():
     # ymer.plot_data()
     # print(ymer.calculate_rating())
 
-    karl_persson = Player("Karl", "Persson")
-    karl_persson.load_player1()
-    print(karl_persson.player_scores)
-    karl_persson.calc_rating()
-    andreas = Player("Andreas", "Gustafsson")
-    andreas.load_player1()
-    andreas.all_overview("andreas")
+    #karl_persson = Player("Karl", "Persson")
+    #karl_persson.load_player1()
+    #print(karl_persson.player_scores)
+    #karl_persson.calc_rating()
+    #andreas = Player("Andreas", "Gustafsson")
+    #andreas.load_player1()
+    #andreas.all_overview("andreas")
     # andreas.overview("andreas")
 
+    main_db = Database("main")
+    main_db.all_overview("karl persson")
+    # main_db.store_hole_overview("karl persson")
+    main_db.load_hole_overview()
+    for key in main_db.hole_stats.keys():
+        print(f"{key}: {main_db.hole_stats[key]}")
+
+    # main_db.store_hole_overview("andreas")
     # andreas.all_overview("andreas")
 
 
