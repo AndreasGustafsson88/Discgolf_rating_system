@@ -80,14 +80,28 @@ def split_list(s):  # Split into two list that can represent x, y graph in Matpl
            list(chain.from_iterable([i[1::2] for i in s if 30 < i[0] < 200]))
 
 
-def convert_ratings_to_dict(rating, score): # make 1 func to calculate average? it´s being used in two places
+def convert_ratings_to_dict(rating, score, calc_player=False): # make 1 func to calculate average? it´s being used in two places
     coef = np.polyfit(rating, score, 1)
-    predicted_ratings = [i for i in range(650, 1080)]
-    predicted = list(map(int, np.polyval(coef, predicted_ratings)))
+    predicted_ratings = [i for i in range(650, 1200)]
+    if calc_player:
+        predicted = list(np.polyval(coef, predicted_ratings))
+    else:
+        predicted = list(map(int, np.polyval(coef, predicted_ratings)))
 
     return {predicted[i]: predicted_ratings[i] for i in range(len(predicted))}
 
 
+def calc_average_by_hole(s):
+    d = s
+    for k, v in d.items():
+        for key, value in d[k].items():
+            if key == "PAR":
+                continue
+            elif value != [0, []]:
+                d[k][key][1] = round(sum(d[k][key][1]) / len(d[k][key][1]), 2)
+                res = round(d[k][key][1] - d[k][key][0], 2)
+                d[k][key].append(res)
+    return d
 
 
 

@@ -83,19 +83,7 @@ def load_hole_stats():
                         stats[k] = stored_stats[k]
                     else:
                         for key, val in v.items():
-                            if not val == stats[k][key]:
+                            if not val == stats[k][key] and not key == "PAR":
                                 for num in stored_stats[k][key][1]:
                                     stats[k][key][1].append(num)
     return stats
-
-
-def update_dict(d, u):
-    res_dict = defaultdict(dict)
-    for k, v in u.items():
-        if k not in d.keys():
-            d.update(k)
-        else:
-            for key, val in v.items():
-                if not val == d[key]:
-                    d[k][key][1].append(u[k][key][1])
-    return d

@@ -13,20 +13,6 @@ class Player:
         self.rating = []
 
     @staticmethod
-    def load_player(self, first_name, last_name):
-        name = player_data(f"{first_name} {last_name}")
-        return name
-
-    @staticmethod # This belongs to its own class? Database, name main?
-    def all_overview(file_name, store=False):
-        all_data = course_stats(file_name)
-        if not store:
-            for key in all_data.keys():
-                print(f"{key}: {all_data[key]}")
-        else:
-            return all_data
-
-    @staticmethod
     def overview(file_name):
         all_data = read_csv(file_name)
         for key in all_data.keys():
@@ -36,7 +22,7 @@ class Player:
         self.rating = int(statistics.mean(get_rating(self.player_scores, rounds, course)))
         print(self.rating)
 
-    def load_player1(self):
+    def load_player(self):
         self.player_scores = player_data(f"{self.first_name} {self.last_name}")
         return self.player_scores
 

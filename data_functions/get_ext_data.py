@@ -39,15 +39,18 @@ def course_stats(name): # WORK IN PROGRESS
             if "Par" in i[0]:
                 if dict2[i[1]] == {}:
                     try:
-                        for j in range(1, 25):
-                            dict2[i[1]][j] = [i[j+5], []]
+                        dict2[i[1]]["PAR"] = [int(i[4])]
+                        for j in range(1, 19):
+                            dict2[i[1]][j] = [int(i[j+5]) if i[j+5].isnumeric() else 0, []]
                     except IndexError:
                         continue
             if name.lower() in i[0].lower():
                 try:
-                    for j in range(1, 25):
-                        dict2[i[1]][j][1].append(i[j+5])
+                    for j in range(1, 19):
+                        if i[j+5].isnumeric():
+                            dict2[i[1]][j][1].append(int(i[j+5]))
                 except KeyError:
                     continue
+    print(dict2)
     return dict2
 

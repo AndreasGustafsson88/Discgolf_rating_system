@@ -1,5 +1,6 @@
 from data_functions.get_ext_data import course_stats
-from data_functions.save_and_load import store_hole_stats, load_hole_stats
+from data_functions.handle_data import convert_ratings_to_dict, calc_average_by_hole
+from data_functions.save_and_load import store_hole_stats, load_hole_stats, player_data, course_data
 
 
 class Database:
@@ -9,7 +10,25 @@ class Database:
         self.courses = []
         self.players = []
 
-    def all_overview(self, file_name, show=False):
+    @staticmethod
+    def get_throws(player, course):
+        player = player_data(player)
+        rating, score = course_data(course)
+        score_dict = convert_ratings_to_dict(rating, score, calc_player=True)
+        for k, v in score_dict.items():
+            if player.rating == v:
+                print(int(round(k)))
+
+    @staticmethod
+    def load_player(full_name):
+        return player_data(full_name)
+
+    def get_hole_average(self):
+        stats = calc_average_by_hole(self.hole_stats)
+        for k in stats.keys():
+            print(f"{k}: {stats[k]}")
+
+    def all_overview(self, file_name, show=True):
         self.hole_stats = course_stats(file_name)
         print("\n".join(f"{key}: {self.hole_stats[key]}" for key in self.hole_stats.keys() if show))
         return self.hole_stats
@@ -21,6 +40,8 @@ class Database:
     def load_hole_overview(self):
         self.hole_stats = load_hole_stats()
         print("Load successful")
+
+
 
     def save_database(self):
         pass

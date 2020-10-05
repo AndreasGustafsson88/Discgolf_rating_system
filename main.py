@@ -24,7 +24,6 @@ def main():
     # ymer = Course("Ymergårdens Discgolfcenter", "BORÅS")
     # ymer.get_data("https://www.pdga.com/tour/event/39351")
     # ymer.load_data()
-    # ymer.plot_data()
     # print(ymer.calculate_rating())
     # ymer.plot_data()
     # ymer.merge_all()
@@ -35,22 +34,19 @@ def main():
     # ymer.plot_data()
     # print(ymer.calculate_rating())
 
-    #karl_persson = Player("Karl", "Persson")
-    #karl_persson.load_player1()
-    #print(karl_persson.player_scores)
-    #karl_persson.calc_rating()
-    #andreas = Player("Andreas", "Gustafsson")
-    #andreas.load_player1()
-    #andreas.all_overview("andreas")
-    # andreas.overview("andreas")
+
+
 
     main_db = Database("main")
-    main_db.all_overview("karl persson")
+    # main_db.all_overview("karl persson")
+    # main_db.all_overview("andreas")
     # main_db.store_hole_overview("karl persson")
+    # main_db.store_hole_overview("andreas")
+    main_db.get_throws("Andreas Gustafsson", "Ymergårdens Discgolfcenter")
+    main_db.get_throws("Karl Persson", "Ymergårdens Discgolfcenter")
     main_db.load_hole_overview()
-    for key in main_db.hole_stats.keys():
-        print(f"{key}: {main_db.hole_stats[key]}")
-
+    print(main_db.hole_stats)
+    main_db.get_hole_average()
     # main_db.store_hole_overview("andreas")
     # andreas.all_overview("andreas")
 
