@@ -108,6 +108,7 @@ def calc_average_by_hole(s):
         index += 1
     return d
 
+
 def sort_by_diff(s):
     res = []
     for i in s:
@@ -115,6 +116,7 @@ def sort_by_diff(s):
         temp.sort(key=lambda x: x[3], reverse=True)
         res.append(i[:2] + temp)
     return res
+
 
 def calc_average_by_hole1(s): # RETURNS A DICT BUT REALLY HARD TO SORT, CURRENTLY DOESN´T USE IT
     d = s

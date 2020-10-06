@@ -9,9 +9,10 @@ class Database:
         self.hole_stats = []
         self.courses = []
         self.players = []
+        self.hole_difficulty = []
 
     @staticmethod
-    def get_throws(player, course):
+    def get_throws1(player, course):
         player = player_data(player)
         rating, score = course_data(course)
         score_dict = convert_ratings_to_dict(rating, score, calc_player=True)
@@ -19,16 +20,36 @@ class Database:
             if player.rating == v:
                 print(int(round(k)))
 
+    def get_throws(self, player, course):
+        player = player_data(player)
+        rating, score = course_data(course)
+        score_dict = convert_ratings_to_dict(rating, score, calc_player=True)
+        throws = [int(round(k)) for k, v in score_dict.items() if player.rating == v]
+        for i in self.hole_difficulty:
+            if course in i[0]:
+                difference = throws[0] - i[1][0]
+                if difference > 0:
+                    holes = [i[j][0] for j in range(2, difference + 2)]
+                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par {i[1][0]}, is a though one, you get 1 extra throw "
+                          f"on hole {holes}")
+                if difference < 0:
+                    holes = [i[j][0] for j in range(-1, difference - 1, -1)]
+                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par {i[1][0]}, is cake for someone of your caliber! "
+                          f"you need a birdie on {holes}")
+                if difference == 0:
+                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par {i[1][0]}, is just like its made for you! "
+                          f"Just get through this on par and you´ll be fine")
+
+
     @staticmethod
     def load_player(full_name):
         return player_data(full_name)
 
-    def get_hole_average(self, sort=True):
-        stats = calc_average_by_hole(self.hole_stats)
+    def get_hole_average(self, sort=True, show=True):
+        self.hole_difficulty = calc_average_by_hole(self.hole_stats)
         if sort:
-            stats = sort_by_diff(stats)
-        for i in stats:
-            print(i)
+            self.hole_difficulty = sort_by_diff(self.hole_difficulty)
+        print("\n".join(f"{i}" for i in self.hole_difficulty if show))
 
     def all_overview(self, file_name, show=True):
         self.hole_stats = course_stats(file_name)
