@@ -42,9 +42,11 @@ def main():
     # main_db.all_overview("andreas")
     # main_db.store_hole_overview("karl persson")
     # main_db.store_hole_overview("andreas")
-    main_db.get_throws("Andreas Gustafsson", "Ymergårdens Discgolfcenter")
-    main_db.get_throws("Karl Persson", "Ymergårdens Discgolfcenter")
+    # main_db.get_throws("Andreas Gustafsson", "Ymergårdens Discgolfcenter")
+    # main_db.get_throws("Karl Persson", "Ymergårdens Discgolfcenter")
     main_db.load_hole_overview()
+    # for k in main_db.hole_stats.keys():
+    #    print(f"{k}: {main_db.hole_stats[k]}")
     print(main_db.hole_stats)
     main_db.get_hole_average()
     # main_db.store_hole_overview("andreas")

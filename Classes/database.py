@@ -1,5 +1,5 @@
 from data_functions.get_ext_data import course_stats
-from data_functions.handle_data import convert_ratings_to_dict, calc_average_by_hole
+from data_functions.handle_data import convert_ratings_to_dict, calc_average_by_hole, sort_by_diff
 from data_functions.save_and_load import store_hole_stats, load_hole_stats, player_data, course_data
 
 
@@ -23,10 +23,12 @@ class Database:
     def load_player(full_name):
         return player_data(full_name)
 
-    def get_hole_average(self):
+    def get_hole_average(self, sort=True):
         stats = calc_average_by_hole(self.hole_stats)
-        for k in stats.keys():
-            print(f"{k}: {stats[k]}")
+        if sort:
+            stats = sort_by_diff(stats)
+        for i in stats:
+            print(i)
 
     def all_overview(self, file_name, show=True):
         self.hole_stats = course_stats(file_name)

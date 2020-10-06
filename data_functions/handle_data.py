@@ -92,6 +92,31 @@ def convert_ratings_to_dict(rating, score, calc_player=False): # make 1 func to 
 
 
 def calc_average_by_hole(s):
+    d = []
+    index = 0
+    for k, v in s.items():
+        d.append([k])
+        sub_index = 2
+        for key, value in s[k].items():
+            if key == "PAR":
+                d[index].append(s[k][key])
+            elif value != [0, []]:
+                d[index].append([f"{key}:", s[k][key][0], round(sum(s[k][key][1]) / len(s[k][key][1]), 2)])
+                diff = round(d[index][sub_index][2] - d[index][sub_index][1], 2)
+                d[index][sub_index].append(diff)
+                sub_index += 1
+        index += 1
+    return d
+
+def sort_by_diff(s):
+    res = []
+    for i in s:
+        temp = i[2:]
+        temp.sort(key=lambda x: x[3], reverse=True)
+        res.append(i[:2] + temp)
+    return res
+
+def calc_average_by_hole1(s): # RETURNS A DICT BUT REALLY HARD TO SORT, CURRENTLY DOESN´T USE IT
     d = s
     for k, v in d.items():
         for key, value in d[k].items():
@@ -101,6 +126,7 @@ def calc_average_by_hole(s):
                 d[k][key][1] = round(sum(d[k][key][1]) / len(d[k][key][1]), 2)
                 res = round(d[k][key][1] - d[k][key][0], 2)
                 d[k][key].append(res)
+    print(d)
     return d
 
 
