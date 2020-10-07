@@ -11,15 +11,6 @@ class Database:
         self.players = []
         self.hole_difficulty = []
 
-    @staticmethod
-    def get_throws1(player, course):
-        player = player_data(player)
-        rating, score = course_data(course)
-        score_dict = convert_ratings_to_dict(rating, score, calc_player=True)
-        for k, v in score_dict.items():
-            if player.rating == v:
-                print(int(round(k)))
-
     def get_throws(self, player, course):
         player = player_data(player)
         rating, score = course_data(course)

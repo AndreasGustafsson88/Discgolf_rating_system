@@ -38,11 +38,11 @@ class Course:
 
     def save_data(self, event_link):
         store_course_data(self.name, self.latest_rating, self.latest_scores, event_link)
-        print("Save successful.")
+        print("Save successful")
 
     def load_data(self):
         self.latest_rating, self.latest_scores = course_data(self.name)
-        print("Load successful.")
+        print("Load successful")
 
     def merge_all(self):
         store_course_data(self.name, self.latest_rating, self.latest_scores)

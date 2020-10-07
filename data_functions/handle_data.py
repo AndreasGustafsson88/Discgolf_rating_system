@@ -6,43 +6,44 @@ def clean_raw_data(raw_data): # FIX THIS SHIT, lol!!
     temp1 = [i.split("\n") for i in raw_data[1:]]
     temp2 = [i.split() for j in [item[1:] for item in temp1] for i in j]
     result, res = [], []
+    heading = temp1[0][0]
 
-    if "Finals" in temp1[0][0]:
+    if "Finals" in heading:
         for i in temp2:
             try:
                 result.append([i[7], i[5], i[9], i[5], i[11], i[5], i[13], i[5]])
             except IndexError:
                 continue
 
-    if "Points" and "Rd3" in temp1[0][0]:
+    if "Points" in heading and "Rd3" in heading:
         for i in temp2:
             try:
                 result.append([i[7], i[5], i[9], i[5], i[11], i[5]])
             except IndexError:
                 continue
 
-    elif "Rd3" in temp1[0][0]:
+    elif "Rd3" in heading:
         for i in temp2:
             try:
                 result.append([i[6], i[4], i[8], i[4], i[4], i[10]])
             except IndexError:
                 continue
 
-    elif "Points" and "Rd2" in temp1[0][0]:
+    elif "Points" in heading and "Rd2" in heading:
         for i in temp2:
             try:
                 result.append([i[7], i[5], i[9], i[5]])
             except IndexError:
                 continue
 
-    elif "Rd2" in temp1[0][0]:
+    elif "Rd2" in heading:
         for i in temp2:
             try:
                 result.append([i[6], i[4], i[8], i[4]])
             except IndexError:
                 continue
 
-    elif "Points" in temp1[0][0]:
+    elif "Points" in heading:
         for i in temp2:
             try:
                 result.append([i[7], i[5]])
@@ -67,6 +68,7 @@ def clean_raw_data(raw_data): # FIX THIS SHIT, lol!!
             except IndexError:
                 if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200:
                     res.append(i)
+    print(len(res))
 
     return res
 

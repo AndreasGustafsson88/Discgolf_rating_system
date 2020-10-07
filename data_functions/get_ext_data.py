@@ -23,7 +23,7 @@ def read_csv(name):
     with open(f"{PLAYER_PATH}\\{name}.csv", "r", encoding="utf-8") as score_card:
         for i in csv.reader(score_card):
             if name.lower() in i[0].lower():
-                dict1[i[1]].append(int(i[4]))
+                dict1[f"{i[1]} {i[2]}"].append(int(i[4]))
     return {key: dict1[key] for key in sorted(dict1)}
 
 
@@ -37,16 +37,16 @@ def course_stats(name):
     with open(f"{PLAYER_PATH}\\{name}.csv", "r", encoding="utf-8") as score_card:
         for h, i in enumerate(csv.reader(score_card)):
             if "Par" in i[0]:
-                if dict2[i[1]] == {}:
-                    dict2[i[1]]["PAR"] = [int(i[4])]
+                if dict2[f"{i[1]} {i[2]}"] == {}:
+                    dict2[f"{i[1]} {i[2]}"]["PAR"] = [int(i[4])]
                     for j in range(1, 19):
                         if i[j + 5].isnumeric():
-                            dict2[i[1]][j] = [int(i[j+5]), []]
+                            dict2[f"{i[1]} {i[2]}"][j] = [int(i[j+5]), []]
             if name.lower() in i[0].lower():
                 try:
                     for j in range(1, 19):
                         if i[j+5].isnumeric():
-                            dict2[i[1]][j][1].append(int(i[j+5]))
+                            dict2[f"{i[1]} {i[2]}"][j][1].append(int(i[j+5]))
                 except KeyError:
                     continue
     return dict2
