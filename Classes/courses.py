@@ -1,4 +1,3 @@
-import pickle
 from data_functions import handle_data
 from data_functions.get_ext_data import download
 from data_functions.graph_rating_score import plot_data
@@ -15,6 +14,7 @@ class Course:
         self.num_holes = num_holes
         self.data = []
         self.latest_scores, self.latest_rating = [], []
+        self.course_rating = []
 
     # Make loaded data iterable so you can see all info that has been loaded
 
@@ -34,8 +34,8 @@ class Course:
     def plot_data(self):
         plot_data(self.latest_rating, self.latest_scores, self.name)
 
-    def calculate_rating(self):
-        return convert_ratings_to_dict(self.latest_rating, self.latest_scores)
+    def show_course_rating(self):
+        print("\n".join(f"{key}: {self.course_rating[key]}" for key in self.course_rating))
 
     def save_data(self, event_link):
         store_course_data(self.name, self.latest_rating, self.latest_scores, event_link)
@@ -43,7 +43,8 @@ class Course:
 
     def load_data(self):
         self.latest_rating, self.latest_scores = course_data(self.name)
-        print("Load successful")
+        self.course_rating = convert_ratings_to_dict(self.latest_rating, self.latest_scores)
+        print("Course data loaded successfully")
 
     def merge_all(self):
         store_course_data(self.name, self.latest_rating, self.latest_scores)

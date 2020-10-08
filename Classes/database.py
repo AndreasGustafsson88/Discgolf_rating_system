@@ -1,6 +1,7 @@
 from data_functions.get_ext_data import course_stats
+from data_functions.graph_rating_score import plot_player
 from data_functions.handle_data import convert_ratings_to_dict, calc_average_by_hole, sort_by_diff
-from data_functions.save_and_load import store_hole_stats, load_hole_stats, player_data, course_data
+from data_functions.save_and_load import store_hole_stats, load_hole_stats, player_data, course_data, get_rating
 
 
 class Database:
@@ -10,6 +11,10 @@ class Database:
         self.courses = []
         self.players = []
         self.hole_difficulty = []
+
+    @staticmethod
+    def load_player(full_name):
+        return player_data(full_name)
 
     def get_throws(self, player, course):
         player = player_data(player)
@@ -31,10 +36,10 @@ class Database:
                     print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par {i[1][0]}, is just like its made for you! "
                           f"Just get through this on par and you´ll be fine")
 
-
-    @staticmethod
-    def load_player(full_name):
-        return player_data(full_name)
+    def player_history(self, name, course=""):
+        player = self.load_player(name)
+        rating_date = get_rating(player.player_scores, 20, course, plot=True)
+        plot_player(name, rating_date)
 
     def get_hole_average(self, sort=True):
         if sort:

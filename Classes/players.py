@@ -15,7 +15,7 @@ class Player:
     @staticmethod
     def overview(file_name):
         all_data = read_csv(file_name)
-        for key in all_data.keys():
+        for key in all_data:
             print(f"{key}: {all_data[key]}")
 
     def calc_rating(self, rounds=20, course=""):

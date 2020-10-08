@@ -43,7 +43,7 @@ def store_player_data(player_name, object1):
             os.makedirs(f"{PLAYER_DATA_PATH}\\{player_name}")
 
 
-def player_data(player_name):
+def player_data1(player_name):
     for path, sub_folder, file_list in os.walk(PLAYER_DATA_PATH):
         for name in file_list:
             if player_name in name:
@@ -51,7 +51,13 @@ def player_data(player_name):
                     return pickle.load(file)
 
 
-def get_rating(player_scores, rounds, course):
+def player_data(player_name): # IS THIS BETTER?
+    match = [[path, name] for path, sub_folder, file_list in os.walk(PLAYER_DATA_PATH) for name in file_list if player_name in name]
+    with open(os.path.join(match[0][0], match[0][1]), "rb") as file:
+        return pickle.load(file)
+
+
+def get_rating(player_scores, rounds, course, plot=False):
     ratings = []
     how_many_rounds = 0
     for values in player_scores:
@@ -62,8 +68,11 @@ def get_rating(player_scores, rounds, course):
                 if values[0] in name and "ALL_ROUNDS" in name and course in name:
                     with open(os.path.join(path, name), "rb") as file:
                         average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
-                        ratings.append(average[values[2]])
-                        how_many_rounds += 1
+                        if plot:
+                            ratings.append([values[1], average[values[2]]])
+                        else:
+                            ratings.append(average[values[2]])
+                            how_many_rounds += 1
     return ratings
 
 
