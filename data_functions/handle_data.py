@@ -2,6 +2,20 @@ from itertools import chain
 import numpy as np
 
 
+def filter_list(result, res):
+    for i in result:
+        try:
+            if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200 and 30 < int(i[2]) < 100 and 30 < int(i[6]) < 100:
+                res.append(i)
+        except IndexError:
+            try:
+                if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200 and 30 < int(i[2]) < 100:
+                    res.append(i)
+            except IndexError:
+                if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200:
+                    res.append(i)
+
+
 def clean_raw_data(raw_data): # FIX THIS SHIT, lol!!
     temp1 = [i.split("\n") for i in raw_data[1:]]
     temp2 = [i.split() for j in [item[1:] for item in temp1] for i in j]
@@ -57,19 +71,7 @@ def clean_raw_data(raw_data): # FIX THIS SHIT, lol!!
             except IndexError:
                 continue
 
-    for i in result:
-        try:
-            if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200 and 30 < int(i[2]) < 100 and 30 < int(i[6]) < 100:
-                res.append(i)
-        except IndexError:
-            try:
-                if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200 and 30 < int(i[2]) < 100:
-                    res.append(i)
-            except IndexError:
-                if 30 < int(i[0]) < 100 and 650 < int(i[1]) < 1200:
-                    res.append(i)
-    print(len(res))
-
+    filter_list(result, res)
     return res
 
 

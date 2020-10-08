@@ -29,24 +29,22 @@ def read_csv(name):
 
 def sort_rounds(name):
     with open(f"{PLAYER_PATH}\\{name}.csv", "r", encoding="utf-8") as score_card:
-        return [[i[1], i[3], int(i[4])] for i in csv.reader(score_card) if name.lower() in i[0].lower()]
+        return [[f"{i[1]} {i[2]}", i[3], int(i[4])] for i in csv.reader(score_card) if name.lower() in i[0].lower()]
 
 
 def course_stats(name):
     dict2 = defaultdict(dict)
     with open(f"{PLAYER_PATH}\\{name}.csv", "r", encoding="utf-8") as score_card:
         for h, i in enumerate(csv.reader(score_card)):
+            course = f"{i[1]} {i[2]}"
             if "Par" in i[0]:
-                if dict2[f"{i[1]} {i[2]}"] == {}:
-                    dict2[f"{i[1]} {i[2]}"]["PAR"] = [int(i[4])]
-                    for j in range(1, 19):
-                        if i[j + 5].isnumeric():
-                            dict2[f"{i[1]} {i[2]}"][j] = [int(i[j+5]), []]
+                if dict2[course] == {}:
+                    dict2[course]["PAR"] = [int(i[4])]
+                    dict2[course] = {j: [int(i[j+5]), []] for j in range(1, 19) if i[j + 5].isnumeric()}
             if name.lower() in i[0].lower():
                 try:
                     for j in range(1, 19):
-                        if i[j+5].isnumeric():
-                            dict2[f"{i[1]} {i[2]}"][j][1].append(int(i[j+5]))
+                        dict2[course][j][1].append(int(i[j+5]))
                 except KeyError:
                     continue
     return dict2

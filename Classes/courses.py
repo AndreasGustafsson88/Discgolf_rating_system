@@ -27,6 +27,7 @@ class Course:
         raw_data = download(link)
         clean_data = handle_data.clean_raw_data(raw_data)
         clean_data_int = handle_data.convert_to_int(clean_data)
+        print(len(clean_data_int))
         self.latest_scores, self.latest_rating = handle_data.split_list(clean_data_int)
         print("Data download complete!")
 

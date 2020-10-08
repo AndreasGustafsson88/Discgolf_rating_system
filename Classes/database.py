@@ -36,11 +36,10 @@ class Database:
     def load_player(full_name):
         return player_data(full_name)
 
-    def get_hole_average(self, sort=True, show=True):
-        self.hole_difficulty = calc_average_by_hole(self.hole_stats)
+    def get_hole_average(self, sort=True):
         if sort:
             self.hole_difficulty = sort_by_diff(self.hole_difficulty)
-        print("\n".join(f"{i}" for i in self.hole_difficulty if show))
+        print("\n".join(f"{i}" for i in self.hole_difficulty))
 
     def all_overview(self, file_name, show=True):
         self.hole_stats = course_stats(file_name)
@@ -51,23 +50,15 @@ class Database:
         store_hole_stats(self.hole_stats, name)
         print("Save successful")
 
-    def load_hole_overview(self):
+    def update_database(self):
         self.hole_stats = load_hole_stats()
-        print("Load successful")
-
-
+        self.hole_difficulty = calc_average_by_hole(self.hole_stats)
+        print("database updated successfully")
 
     def save_database(self):
         pass
 
-    def load_database(self):
-        pass
-
     def calc_hole_average(self):
-        pass
-
-    def update_database(self):
-        # create new database and compare to main
         pass
 
     def show_courses(self):

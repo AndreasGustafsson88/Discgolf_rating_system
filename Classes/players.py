@@ -37,7 +37,7 @@ class Player:
         return self.player_scores
 
     def enter_data(self, name, date, result):
-        self.player_scores = [name, date, [result]]
+        self.player_scores = [[name, date, res] for res in result]
         return self.player_scores
 
     def calc_average(self):
