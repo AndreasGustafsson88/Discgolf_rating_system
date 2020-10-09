@@ -2,19 +2,33 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 import csv
 from collections import defaultdict
+import time
 
 DRIVER_PATH = "C:\Program Files (x86)\Webdrivers\chromedriver.exe"
 PLAYER_PATH = "C:\Kod\Projekt\Handicap system for Discgolf\Player_data"
 
 
-def download(event_link, element_class="table-container", headless=True):
+def download(event_link, headless=True):
     options = Options()
     options.headless = headless
     options.add_argument("--window-size=2000,1200")
 
     driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
     driver.get(event_link)
-    return [rating.text for rating in driver.find_elements_by_class_name(element_class)]
+    score = [score.get_property("innerHTML") for score in driver.find_elements_by_class_name('round')]
+    rating = [rating.get_property("innerHTML") for rating in driver.find_elements_by_class_name("player-rating")]
+    return score, rating
+
+# def download(event_link, element_class="table-container", headless=True):
+#     options = Options()
+#     options.headless = headless
+#     options.add_argument("--window-size=2000,1200")
+#
+#     driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
+#     driver.get(event_link)
+#     time.sleep(3)
+#     driver.find_element_by_xpath('//*[@id="block-system-main"]/div/div/div/div/div/div[11]/div/div[2]/details[1]/div[52]/a').click()
+#     return [rating.text for rating in driver.find_elements_by_class_name(element_class)]
 
 
 def read_csv(name):

@@ -9,11 +9,14 @@ from data_functions.save_and_load import player_data, course_data
 
 
 def main():
+    holmenkollen = Course("Holmenkollen DiscGolfpark Normal Oppsett", "Oslo")
+    holmenkollen.get_data('https://www.pdga.com/tour/event/46013')
+    holmenkollen.plot_data()
 
-    krokhol = Course("Krokhol Disc Golf Course Krokhol Regular Layout", "Oslo")
+    # krokhol = Course("Krokhol Disc Golf Course Krokhol Regular Layout", "Oslo")
     # ymer.get_data("https://www.pdga.com/tour/event/41059")
     # krokhol.get_data("https://www.pdga.com/tour/event/42664")
-    krokhol.load_data()
+    # krokhol.load_data()
     # krokhol.show_course_rating()
 
     # ymer.plot_data()
@@ -24,12 +27,14 @@ def main():
     # gässlösa.merge_all()
 
     andreas = Player("Andreas", "Gustafsson")
-    andreas.get_data("andreas")
-
+    # andreas.get_data("andreas")
+    marius_dydland = Player("Marius", "Dydland")
+    marius_dydland.get_data("marius dydland")
+    marius_dydland.overview("marius dydland")
 
     main_db = Database("main")
     main_db.update_database()
-    main_db.player_history("Andreas Gustafsson")
+    # main_db.player_history("Andreas Gustafsson")
     # main_db.all_overview("karl persson")
     # main_db.all_overview("andreas")
     # main_db.store_hole_overview("karl persson")

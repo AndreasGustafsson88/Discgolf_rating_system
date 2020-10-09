@@ -1,7 +1,7 @@
 from data_functions import handle_data
 from data_functions.get_ext_data import download
 from data_functions.graph_rating_score import plot_data
-from data_functions.handle_data import convert_ratings_to_dict
+from data_functions.handle_data import convert_ratings_to_dict, clean_raw_data
 from data_functions.save_and_load import store_course_data, course_data
 
 DRIVER_PATH = "C:\\Program Files (x86)\\Webdrivers\\chromedriver.exe"
@@ -24,12 +24,20 @@ class Course:
 
     def get_data(self, link):
         print("Getting raw data")
-        raw_data = download(link)
-        clean_data = handle_data.clean_raw_data(raw_data)
-        clean_data_int = handle_data.convert_to_int(clean_data)
-        print(len(clean_data_int))
-        self.latest_scores, self.latest_rating = handle_data.split_list(clean_data_int)
+        score, rating = download(link)
+        self.latest_scores, self.latest_rating = clean_raw_data(score, rating)
         print("Data download complete!")
+
+    # def get_data(self, link):
+    #     print("Getting raw data")
+    #     score, rating = download(link)
+    #     self.latest_results = clean_raw_data(score, rating)
+    #     clean_data = handle_data.clean_raw_data(raw_data)
+    #     clean_data_int = handle_data.convert_to_int(clean_data)
+    #     print(len(clean_data_int))
+    #     self.latest_scores, self.latest_rating = handle_data.split_list(clean_data_int)
+    #     print("Data download complete!")
+    #
 
     def plot_data(self):
         plot_data(self.latest_rating, self.latest_scores, self.name)
