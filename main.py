@@ -9,14 +9,18 @@ from data_functions.save_and_load import player_data, course_data
 
 
 def main():
-    holmenkollen = Course("Holmenkollen DiscGolfpark Normal Oppsett", "Oslo")
-    holmenkollen.get_data('https://www.pdga.com/tour/event/46013')
-    holmenkollen.plot_data()
+    # stovner = Course("Stovner Discgolfpark Main", "Oslo")
+    # stovner.get_data("https://www.pdga.com/tour/event/41183")
+    # stovner.load_data()
+    # stovner.merge_all()
+    # holmenkollen.load_data()
+    # holmenkollen.merge_all()
 
-    # krokhol = Course("Krokhol Disc Golf Course Krokhol Regular Layout", "Oslo")
+    krokhol = Course("Krokhol Disc Golf Course Krokhol Regular Layout", "Oslo")
     # ymer.get_data("https://www.pdga.com/tour/event/41059")
     # krokhol.get_data("https://www.pdga.com/tour/event/42664")
-    # krokhol.load_data()
+    krokhol.load_data()
+    krokhol.plot_data()
     # krokhol.show_course_rating()
 
     # ymer.plot_data()
@@ -30,19 +34,25 @@ def main():
     # andreas.get_data("andreas")
     marius_dydland = Player("Marius", "Dydland")
     marius_dydland.get_data("marius dydland")
-    marius_dydland.overview("marius dydland")
+    marius_dydland.calc_rating()
+
+    # marius_dydland.calc_rating()
+    # marius_dydland.save_player(marius_dydland)
 
     main_db = Database("main")
+
     main_db.update_database()
-    # main_db.player_history("Andreas Gustafsson")
+    # main_db.get_hole_average()
+    # main_db.player_history("Marius Dydland")
     # main_db.all_overview("karl persson")
     # main_db.all_overview("andreas")
     # main_db.store_hole_overview("karl persson")
     # main_db.store_hole_overview("andreas")
 
-    main_db.get_throws("Andreas Gustafsson", "Ymergårdens Discgolfcenter 2020 tournament layout")
-    main_db.get_throws("Karl Persson", "Gässlösa DGB Hole 1-18 (2020)")
-    main_db.get_throws("Karl Persson", "Ymergårdens Discgolfcenter 2020 tournament layout")
+    main_db.get_throws("Marius Dydland", "Krokhol Disc Golf Course Krokhol Regular Layout")
+    main_db.get_throws("Marius Dydland", "Stovner Discgolfpark Main")
+    main_db.get_throws("Marius Dydland", "Holmenkollen DiscGolfpark Normal Oppsett")
+    main_db.get_throws("Marius Dydland", "Gässlösa DGB Hole 1-18 (2020)")
     # for k in main_db.hole_stats.keys():
     #    print(f"{k}: {main_db.hole_stats[k]}")
     # print(main_db.hole_stats)

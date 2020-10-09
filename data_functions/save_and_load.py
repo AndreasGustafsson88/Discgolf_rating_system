@@ -69,7 +69,10 @@ def get_rating(player_scores, rounds, course, plot=False):
                     with open(os.path.join(path, name), "rb") as file:
                         average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
                         if plot:
-                            ratings.append([values[1], average[values[2]]])
+                            try:
+                                ratings.append([values[1], average[values[2]]])
+                            except KeyError:
+                                print(values)
                         else:
                             ratings.append(average[values[2]])
                             how_many_rounds += 1

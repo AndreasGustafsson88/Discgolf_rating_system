@@ -11,6 +11,7 @@ class Player:
         self.last_name = last_name
         self.player_scores = {}
         self.rating = []
+        self.full_name = f"{self.first_name} {self.last_name}"
 
     @staticmethod
     def overview(file_name):
@@ -20,7 +21,7 @@ class Player:
 
     def calc_rating(self, rounds=20, course=""):
         self.rating = int(statistics.mean(get_rating(self.player_scores, rounds, course)))
-        print(self.rating)
+        print(f"{self.full_name} is rated {self.rating} from the previous {rounds} rounds")
 
     def load_player(self):
         self.player_scores = player_data(f"{self.first_name} {self.last_name}")

@@ -42,9 +42,10 @@ class Database:
         plot_player(name, rating_date)
 
     def get_hole_average(self, sort=True):
+        self.hole_difficulty = calc_average_by_hole(self.hole_stats)
         if sort:
             self.hole_difficulty = sort_by_diff(self.hole_difficulty)
-        print("\n".join(f"{i}" for i in self.hole_difficulty))
+        print("\n".join(f"{i}" for i in sorted(self.hole_difficulty)))
 
     def all_overview(self, file_name, show=True):
         self.hole_stats = course_stats(file_name)
@@ -57,7 +58,7 @@ class Database:
 
     def update_database(self):
         self.hole_stats = load_hole_stats()
-        self.hole_difficulty = calc_average_by_hole(self.hole_stats)
+        self.hole_difficulty = sort_by_diff(calc_average_by_hole(self.hole_stats))
         print("database updated successfully")
 
     def save_database(self):

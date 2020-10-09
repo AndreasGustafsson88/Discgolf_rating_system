@@ -19,17 +19,6 @@ def download(event_link, headless=True):
     rating = [rating.get_property("innerHTML") for rating in driver.find_elements_by_class_name("player-rating")]
     return score, rating
 
-# def download(event_link, element_class="table-container", headless=True):
-#     options = Options()
-#     options.headless = headless
-#     options.add_argument("--window-size=2000,1200")
-#
-#     driver = webdriver.Chrome(options=options, executable_path=DRIVER_PATH)
-#     driver.get(event_link)
-#     time.sleep(3)
-#     driver.find_element_by_xpath('//*[@id="block-system-main"]/div/div/div/div/div/div[11]/div/div[2]/details[1]/div[52]/a').click()
-#     return [rating.text for rating in driver.find_elements_by_class_name(element_class)]
-
 
 def read_csv(name):
     dict1 = defaultdict(list)
@@ -54,7 +43,7 @@ def course_stats(name):
             if "Par" in i[0]:
                 if dict2[course] == {}:
                     dict2[course]["PAR"] = [int(i[4])]
-                    dict2[course] = {j: [int(i[j+5]), []] for j in range(1, 19) if i[j + 5].isnumeric()}
+                    dict2[course].update({j: [int(i[j+5]), []] for j in range(1, 19) if i[j + 5].isnumeric()})
             if name.lower() in i[0].lower():
                 try:
                     for j in range(1, 19):
