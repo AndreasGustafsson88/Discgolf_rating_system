@@ -20,9 +20,9 @@ def clean_raw_data(score, rating):
     return filter_lists(clean_round, clean_rating)
 
 
-def convert_ratings_to_dict(rating, score, calc_player=False): # make 1 func to calculate average? it´s being used in two places
+def convert_ratings_to_dict(rating, score, calc_player=False):
     coef = np.polyfit(rating, score, 1)
-    predicted_ratings = [i for i in range(650, 1200)]
+    predicted_ratings = [i for i in range(500, 1200)]
     if calc_player:
         predicted = list(np.polyval(coef, predicted_ratings))
     else:

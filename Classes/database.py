@@ -1,5 +1,5 @@
 from data_functions.get_ext_data import course_stats
-from data_functions.graph_rating_score import plot_player
+from data_functions.graph_rating_score import plot_player, plot_data
 from data_functions.handle_data import convert_ratings_to_dict, calc_average_by_hole, sort_by_diff
 from data_functions.save_and_load import store_hole_stats, load_hole_stats, player_data, course_data, get_rating
 
@@ -11,6 +11,11 @@ class Database:
         self.courses = []
         self.players = []
         self.hole_difficulty = []
+
+    @staticmethod
+    def plot_course(name):
+        rating, score = course_data(name)
+        plot_data(rating, score, name)
 
     @staticmethod
     def load_player(full_name):
@@ -26,23 +31,27 @@ class Database:
                 difference = throws[0] - i[1][0]
                 if difference > 0:
                     holes = [i[j][0] for j in range(2, difference + 2)]
-                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par {i[1][0]}, is a though one, you get 1 extra throw "
-                          f"on hole {holes}")
+                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
+                          f"{i[1][0]}, is a though one, you get 1 extra throw on hole {holes}")
                 if difference < 0:
                     holes = [i[j][0] for j in range(-1, difference - 1, -1)]
-                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par {i[1][0]}, is cake for someone of your caliber! "
-                          f"you need a birdie on {holes}")
+                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
+                          f"{i[1][0]}, is cake for someone of your caliber! you need a birdie on {holes}")
                 if difference == 0:
-                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par {i[1][0]}, is just like its made for you! "
-                          f"Just get through this on par and you´ll be fine")
+                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
+                          f"{i[1][0]}, is just like its made for you! Just get through this on par and you´ll be fine")
 
     def player_history(self, name, course=""):
         player = self.load_player(name)
-        rating_date = get_rating(player.player_scores, 20, course, plot=True)
+        rating_date, _ = get_rating(player.player_scores, 20, course, all_rating=True)
         plot_player(name, rating_date)
 
-    def get_hole_average(self, sort=True):
+    def get_hole_average(self, sort=True, course="ALL"): # JOBBAR MED NU!
         self.hole_difficulty = calc_average_by_hole(self.hole_stats)
+        if not course == "ALL":
+            for key in self.hole_difficulty:
+                if course == key:
+                    self.hole_difficulty = self.hole_difficulty[key]
         if sort:
             self.hole_difficulty = sort_by_diff(self.hole_difficulty)
         print("\n".join(f"{i}" for i in sorted(self.hole_difficulty)))
@@ -70,11 +79,9 @@ class Database:
     def show_courses(self):
         pass
 
+    def search_course(self):
+        pass
+
     def show_players(self):
         pass
 
-    def plot_course(self):
-        pass
-
-    def plot_player(self):
-        pass

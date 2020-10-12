@@ -1,15 +1,19 @@
+import os
+
 from data_functions.get_ext_data import read_csv, sort_rounds, course_stats
 import statistics
 
 from data_functions.handle_data import convert_ratings_to_dict
 from data_functions.save_and_load import store_player_data, player_data, get_rating
 
+COURSE_DATA_PATH = "C:\\Kod\\Projekt\\Handicap system for Discgolf\\Course_data"
+
 
 class Player:
     def __init__(self, first_name, last_name):
         self.first_name = first_name
         self.last_name = last_name
-        self.player_scores = {}
+        self.player_scores = [] # Change to list?
         self.rating = []
         self.full_name = f"{self.first_name} {self.last_name}"
 
@@ -19,13 +23,14 @@ class Player:
         for key in all_data:
             print(f"{key}: {all_data[key]}")
 
-    def calc_rating(self, rounds=20, course=""):
-        self.rating = int(statistics.mean(get_rating(self.player_scores, rounds, course)))
+    def calc_rating(self, rounds=20, course=""): # Would like to get acutal rounds if not 20
+        rating, rounds = get_rating(self.player_scores, rounds, course)
+        self.rating = int(statistics.mean(rating))
         print(f"{self.full_name} is rated {self.rating} from the previous {rounds} rounds")
 
     def load_player(self):
-        self.player_scores = player_data(f"{self.first_name} {self.last_name}")
-        return self.player_scores
+        all_data = player_data(f"{self.first_name} {self.last_name}")
+        self.player_scores = all_data.player_scores
 
     def save_data(self):
         store_player_data(f"{self.first_name} {self.last_name}", self.player_scores)
@@ -37,9 +42,20 @@ class Player:
         self.player_scores = sort_rounds(file_name)
         return self.player_scores
 
-    def enter_data(self, name, date, result):
-        self.player_scores = [[name, date, res] for res in result]
-        return self.player_scores
+    def enter_data(self, name, result, date=""):
+        if len(result) < 1:
+            print("Enter valid score") # Raise error here
+        match = [name for path, fol_list, files in os.walk(COURSE_DATA_PATH) for folder in fol_list if name == folder]
+        if len(match) == 1:
+            for res in result:
+                rating, _ = get_rating([[match[0], date, res]], rounds=20, course="")
+                if isinstance(rating, list):
+                    self.player_scores.append([match[0], date, res])
+                    self.rating += rating
+            if len(self.rating) < len(result):
+                raise ValueError("The round mentioned above is either rated too high or low")
+            return self.player_scores
+        print("Course and/or layout doesn't exist in the current database")
 
     def calc_average(self):
         average = self.player_scores.copy()

@@ -16,8 +16,6 @@ class Course:
         self.latest_scores, self.latest_rating = [], []
         self.course_rating = []
 
-    # Make loaded data iterable so you can see all info that has been loaded
-
     def __str__(self):
         for i in range(len(self.latest_rating)):
             print(f"{self.latest_scores[i]} {self.latest_rating[i]}")
@@ -27,17 +25,6 @@ class Course:
         score, rating = download(link)
         self.latest_scores, self.latest_rating = clean_raw_data(score, rating)
         print("Data download complete!")
-
-    # def get_data(self, link):
-    #     print("Getting raw data")
-    #     score, rating = download(link)
-    #     self.latest_results = clean_raw_data(score, rating)
-    #     clean_data = handle_data.clean_raw_data(raw_data)
-    #     clean_data_int = handle_data.convert_to_int(clean_data)
-    #     print(len(clean_data_int))
-    #     self.latest_scores, self.latest_rating = handle_data.split_list(clean_data_int)
-    #     print("Data download complete!")
-    #
 
     def plot_data(self):
         plot_data(self.latest_rating, self.latest_scores, self.name)

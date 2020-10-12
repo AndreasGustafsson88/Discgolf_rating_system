@@ -20,7 +20,7 @@ def main():
     # ymer.get_data("https://www.pdga.com/tour/event/41059")
     # krokhol.get_data("https://www.pdga.com/tour/event/42664")
     krokhol.load_data()
-    krokhol.plot_data()
+    # krokhol.plot_data()
     # krokhol.show_course_rating()
 
     # ymer.plot_data()
@@ -31,10 +31,17 @@ def main():
     # gässlösa.merge_all()
 
     andreas = Player("Andreas", "Gustafsson")
-    # andreas.get_data("andreas")
+    # andreas.load_player()
+    # andreas.calc_rating()
     marius_dydland = Player("Marius", "Dydland")
     marius_dydland.get_data("marius dydland")
-    marius_dydland.calc_rating()
+    # marius_dydland.calc_rating()
+
+
+    caroline = Player("Caroline", "Gustafsson")
+    caroline.enter_data("Krokhol Disc Golf Course Krokhol Regular Layout", [65, 85, 70, 80])
+    print(caroline.player_scores)
+    # caroline.calc_rating()
 
     # marius_dydland.calc_rating()
     # marius_dydland.save_player(marius_dydland)
@@ -42,8 +49,9 @@ def main():
     main_db = Database("main")
 
     main_db.update_database()
+
     # main_db.get_hole_average()
-    # main_db.player_history("Marius Dydland")
+    main_db.player_history("Marius Dydland")
     # main_db.all_overview("karl persson")
     # main_db.all_overview("andreas")
     # main_db.store_hole_overview("karl persson")

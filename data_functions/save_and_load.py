@@ -43,40 +43,78 @@ def store_player_data(player_name, object1):
             os.makedirs(f"{PLAYER_DATA_PATH}\\{player_name}")
 
 
-def player_data1(player_name):
+def get_file(name, path):
+    with open(os.path.join(path, name), "rb") as file:
+        return pickle.load(file)
+
+
+def player_data(player_name):
     for path, sub_folder, file_list in os.walk(PLAYER_DATA_PATH):
         for name in file_list:
             if player_name in name:
-                with open(os.path.join(path, name), "rb") as file:
-                    return pickle.load(file)
+                return get_file(name, path)
 
 
-def player_data(player_name): # IS THIS BETTER?
+
+def player_data1(player_name): # IS THIS BETTER?
     match = [[path, name] for path, sub_folder, file_list in os.walk(PLAYER_DATA_PATH) for name in file_list if player_name in name]
     with open(os.path.join(match[0][0], match[0][1]), "rb") as file:
         return pickle.load(file)
 
 
-def get_rating(player_scores, rounds, course, plot=False):
+# def get_rating1(player_scores, rounds, course, all_rating=False): # FÖRSÖK SNYGGA TILL LYFT UT FOR LOOPAR
+#     ratings = []
+#     how_many_rounds = 0
+#     for values in player_scores:
+#         if how_many_rounds == rounds:
+#             return ratings
+#         for path, sub_folder, file_list in os.walk(COURSE_DATA_PATH):
+#             for name in file_list:
+#                 if values[0] in name and "ALL_ROUNDS" in name and course in name:
+#                     with open(os.path.join(path, name), "rb") as file:
+#                         average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
+#                         if all_rating:
+#                             try:
+#                                 ratings.append([values[1], average[values[2]]])
+#                             except KeyError:
+#                                 print(f"{values} round either rated too low or too high, must be between 500 or 1200")
+#                         else:
+#                             ratings.append(average[values[2]])
+#                             how_many_rounds += 1
+#     return ratings
+
+
+def add_to_list(all_rating, ratings, values, how_many_rounds, file):
+    average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
+    if all_rating:
+        try:
+            ratings.append([values[1], average[values[2]]])
+        except KeyError:
+            print(f"{values} round either rated too low or too high, must be between 500 or 1200")
+    else:
+        try:
+            ratings.append(average[values[2]])
+            how_many_rounds.append(0)
+        except KeyError:
+            print(f"{values} round either rated too low or too high, must be between 500 or 1200")
+
+
+def check_match(values, course, all_rating, ratings, how_many_rounds):
+    for path, sub_folder, file_list in os.walk(COURSE_DATA_PATH):
+        for name in file_list:
+            if values[0] in name and "ALL_ROUNDS" in name and course in name:
+                with open(os.path.join(path, name), "rb") as file:
+                    add_to_list(all_rating, ratings, values, how_many_rounds, file)
+
+
+def get_rating(player_scores, rounds, course, all_rating=False): # FÖRSÖK SNYGGA TILL LYFT UT FOR LOOPAR, BÄTTRE?
     ratings = []
-    how_many_rounds = 0
+    how_many_rounds = []
     for values in player_scores:
-        if how_many_rounds == rounds:
-            return ratings
-        for path, sub_folder, file_list in os.walk(COURSE_DATA_PATH):
-            for name in file_list:
-                if values[0] in name and "ALL_ROUNDS" in name and course in name:
-                    with open(os.path.join(path, name), "rb") as file:
-                        average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
-                        if plot:
-                            try:
-                                ratings.append([values[1], average[values[2]]])
-                            except KeyError:
-                                print(values)
-                        else:
-                            ratings.append(average[values[2]])
-                            how_many_rounds += 1
-    return ratings
+        if len(how_many_rounds) == rounds:
+            return ratings, len(how_many_rounds)
+        check_match(values, course, all_rating, ratings, how_many_rounds)
+    return ratings, len(how_many_rounds)
 
 
 def store_hole_stats(data, name):
