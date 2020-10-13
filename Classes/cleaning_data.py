@@ -1,3 +1,9 @@
+"""
+Playing around with managing another class, it's not being used ATM. Just wanted to see how the setup would look
+like and if I can think of using classes like this in the future
+"""
+
+
 from itertools import chain
 
 
