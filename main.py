@@ -30,37 +30,30 @@ def main():
     # gässlösa.plot_data()
     # gässlösa.merge_all()
 
-    andreas = Player("Andreas", "Gustafsson")
     # andreas.load_player()
     # andreas.calc_rating()
-    marius_dydland = Player("Marius", "Dydland")
-    marius_dydland.get_data("marius dydland")
-    # marius_dydland.calc_rating()
-
-
-    caroline = Player("Caroline", "Gustafsson")
-    caroline.enter_data("Krokhol Disc Golf Course Krokhol Regular Layout", [65, 85, 70, 80])
-    print(caroline.player_scores)
-    # caroline.calc_rating()
-
-    # marius_dydland.calc_rating()
-    # marius_dydland.save_player(marius_dydland)
 
     main_db = Database("main")
 
     main_db.update_database()
 
-    # main_db.get_hole_average()
-    main_db.player_history("Marius Dydland")
+    main_db.show_courses()
+    main_db.show_players(ranked=True)
+
+    main_db.get_throws("Benjamin something", "Stovner Discgolfpark Main")
+    main_db.get_throws("Daniel Johansson", "Stovner Discgolfpark Main")
+    # main_db.player_history("Marius Dydland")
+    # main_db.get_throws("Daniel Johansson", "Krokhol Disc Golf Course Krokhol Regular Layout")
+
     # main_db.all_overview("karl persson")
     # main_db.all_overview("andreas")
     # main_db.store_hole_overview("karl persson")
     # main_db.store_hole_overview("andreas")
 
     main_db.get_throws("Marius Dydland", "Krokhol Disc Golf Course Krokhol Regular Layout")
-    main_db.get_throws("Marius Dydland", "Stovner Discgolfpark Main")
-    main_db.get_throws("Marius Dydland", "Holmenkollen DiscGolfpark Normal Oppsett")
-    main_db.get_throws("Marius Dydland", "Gässlösa DGB Hole 1-18 (2020)")
+    # main_db.get_throws("Marius Dydland", "Stovner Discgolfpark Main")
+    # main_db.get_throws("Marius Dydland", "Holmenkollen DiscGolfpark Normal Oppsett")
+    # main_db.get_throws("Marius Dydland", "Gässlösa DGB Hole 1-18 (2020)")
     # for k in main_db.hole_stats.keys():
     #    print(f"{k}: {main_db.hole_stats[k]}")
     # print(main_db.hole_stats)

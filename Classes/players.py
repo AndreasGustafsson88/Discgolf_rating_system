@@ -15,7 +15,10 @@ class Player:
         self.last_name = last_name
         self.player_scores = [] # Change to list?
         self.rating = []
-        self.full_name = f"{self.first_name} {self.last_name}"
+
+    @property
+    def full_name(self):
+        return f"{self.first_name} {self.last_name}"
 
     @staticmethod
     def overview(file_name):
@@ -42,20 +45,24 @@ class Player:
         self.player_scores = sort_rounds(file_name)
         return self.player_scores
 
+    # TESTCASE METODEN, BLEV ANINGEN RÖRIG EFTER ATT JAG FÖRSÖKT ANPASSA DEN
     def enter_data(self, name, result, date=""):
         if len(result) < 1:
-            print("Enter valid score") # Raise error here
+            raise ValueError("Enter valid score")
         match = [name for path, fol_list, files in os.walk(COURSE_DATA_PATH) for folder in fol_list if name == folder]
         if len(match) == 1:
             for res in result:
-                rating, _ = get_rating([[match[0], date, res]], rounds=20, course="")
-                if isinstance(rating, list):
-                    self.player_scores.append([match[0], date, res])
-                    self.rating += rating
+                if isinstance(res, int):
+                    rating, _ = get_rating([[match[0], date, res]], rounds=20, course="")
+                    if isinstance(rating, list):
+                        self.player_scores.append([match[0], date, res])
+                        self.rating += rating
+                else:
+                    raise ValueError(f"input {res} is not a valid input. Must be int format")
             if len(self.rating) < len(result):
                 raise ValueError("The round mentioned above is either rated too high or low")
             return self.player_scores
-        print("Course and/or layout doesn't exist in the current database")
+        raise KeyError("Course and/or layout doesn't exist in the current database")
 
     def calc_average(self):
         average = self.player_scores.copy()

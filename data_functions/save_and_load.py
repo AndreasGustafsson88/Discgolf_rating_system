@@ -1,5 +1,6 @@
 import pickle
 import os
+import glob
 import collections.abc
 from collections import defaultdict
 from itertools import chain
@@ -55,7 +56,6 @@ def player_data(player_name):
                 return get_file(name, path)
 
 
-
 def player_data1(player_name): # IS THIS BETTER?
     match = [[path, name] for path, sub_folder, file_list in os.walk(PLAYER_DATA_PATH) for name in file_list if player_name in name]
     with open(os.path.join(match[0][0], match[0][1]), "rb") as file:
@@ -107,7 +107,7 @@ def check_match(values, course, all_rating, ratings, how_many_rounds):
                     add_to_list(all_rating, ratings, values, how_many_rounds, file)
 
 
-def get_rating(player_scores, rounds, course, all_rating=False): # FÖRSÖK SNYGGA TILL LYFT UT FOR LOOPAR, BÄTTRE?
+def get_rating(player_scores, rounds, course, all_rating=False):
     ratings = []
     how_many_rounds = []
     for values in player_scores:
@@ -141,3 +141,23 @@ def load_hole_stats():
         for file in file_list:
             get_stats_from_file(path, file, stats)
     return stats
+
+
+def list_courses():
+    for path, sub_folder, file_list in os.walk(COURSE_DATA_PATH):
+        return [folder for folder in sub_folder if not folder == "Hole_statistics"]
+
+
+def list_players(ranked=False):
+    players = []
+    if ranked:
+        match = glob.glob(f'Player_data/*/*.dat')
+        for i in match:
+            with open(i, "rb") as file:
+                players.append(pickle.load(file))
+    else:
+        for path, sub_folder, file_list in os.walk(PLAYER_DATA_PATH):
+            return [folder for folder in sub_folder]
+    return players
+
+

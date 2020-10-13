@@ -1,7 +1,8 @@
 from data_functions.get_ext_data import course_stats
 from data_functions.graph_rating_score import plot_player, plot_data
 from data_functions.handle_data import convert_ratings_to_dict, calc_average_by_hole, sort_by_diff
-from data_functions.save_and_load import store_hole_stats, load_hole_stats, player_data, course_data, get_rating
+from data_functions.save_and_load import store_hole_stats, load_hole_stats, player_data, course_data, get_rating, \
+    list_courses, list_players
 
 
 class Database:
@@ -46,12 +47,11 @@ class Database:
         rating_date, _ = get_rating(player.player_scores, 20, course, all_rating=True)
         plot_player(name, rating_date)
 
-    def get_hole_average(self, sort=True, course="ALL"): # JOBBAR MED NU!
+    def get_hole_average(self, sort=True, course="ALL"):
         self.hole_difficulty = calc_average_by_hole(self.hole_stats)
         if not course == "ALL":
-            for key in self.hole_difficulty:
-                if course == key:
-                    self.hole_difficulty = self.hole_difficulty[key]
+            result = [self.hole_difficulty[i] for i, eni in enumerate(self.hole_difficulty) if course == eni[0]]
+            print(result)
         if sort:
             self.hole_difficulty = sort_by_diff(self.hole_difficulty)
         print("\n".join(f"{i}" for i in sorted(self.hole_difficulty)))
@@ -68,20 +68,24 @@ class Database:
     def update_database(self):
         self.hole_stats = load_hole_stats()
         self.hole_difficulty = sort_by_diff(calc_average_by_hole(self.hole_stats))
+        self.courses = list_courses()
+        self.players = list_players()
         print("database updated successfully")
 
     def save_database(self):
         pass
 
-    def calc_hole_average(self):
-        pass
-
     def show_courses(self):
-        pass
+        print(f"There's a total of {len(self.courses)} courses and layouts currently in the database")
+        print("\n".join(f"{i}: {eni}" for i, eni in enumerate(self.courses, 1)))
 
-    def search_course(self):
-        pass
-
-    def show_players(self):
-        pass
+    def show_players(self, ranked=False):
+        if ranked:
+            player = list_players(ranked=True)
+            print(f"There's a total of {len(self.players)} players currently in the database")
+            for j, i in enumerate(player, 1):
+                print(f"{j}: {i.full_name}, {i.rating}")
+        else:
+            print(f"There's a total of {len(self.players)} players currently in the database")
+            print("\n".join(f"{i}: {eni}" for i, eni in enumerate(self.players, 1)))
 
