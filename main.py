@@ -42,6 +42,7 @@ def main():
 
     main_db.get_throws("Benjamin something", "Stovner Discgolfpark Main")
     main_db.get_throws("Daniel Johansson", "Stovner Discgolfpark Main")
+    main_db.get_throws("Daniel Johansson", "Krokhol Disc Golf Course Krokhol Regular Layout")
     # main_db.player_history("Marius Dydland")
     # main_db.get_throws("Daniel Johansson", "Krokhol Disc Golf Course Krokhol Regular Layout")
 

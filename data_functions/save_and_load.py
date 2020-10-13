@@ -148,6 +148,10 @@ def list_courses():
         return [folder for folder in sub_folder if not folder == "Hole_statistics"]
 
 
+def search_course(name):
+    return [name for path, fol_list, files in os.walk(COURSE_DATA_PATH) for folder in fol_list if name == folder]
+
+
 def list_players(ranked=False):
     players = []
     if ranked:

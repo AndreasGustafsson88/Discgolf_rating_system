@@ -30,7 +30,12 @@ class Database:
         for i in self.hole_difficulty:
             if course in i[0]:
                 difference = throws[0] - i[1][0]
-                if difference > 0:
+                if difference > 18:
+                    new_diff = difference - 18
+                    holes = [i[j][0] for j in range(2, new_diff + 2)]
+                    print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
+                          f"{i[1][0]}, your in for a ride, you get 1 extra throw on every hole and TWO extra on hole {holes}")
+                elif difference > 0:
                     holes = [i[j][0] for j in range(2, difference + 2)]
                     print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
                           f"{i[1][0]}, is a though one, you get 1 extra throw on hole {holes}")

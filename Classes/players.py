@@ -4,7 +4,7 @@ from data_functions.get_ext_data import read_csv, sort_rounds, course_stats
 import statistics
 
 from data_functions.handle_data import convert_ratings_to_dict
-from data_functions.save_and_load import store_player_data, player_data, get_rating
+from data_functions.save_and_load import store_player_data, player_data, get_rating, search_course
 
 COURSE_DATA_PATH = "C:\\Kod\\Projekt\\Handicap system for Discgolf\\Course_data"
 
@@ -45,11 +45,11 @@ class Player:
         self.player_scores = sort_rounds(file_name)
         return self.player_scores
 
-    # TESTCASE METODEN, BLEV ANINGEN RÖRIG EFTER ATT JAG FÖRSÖKT ANPASSA DEN
+    # TESTCASE METODEN, BLEV ANINGEN RÖRIG EFTER ATT JAG FÖRSÖKT ANPASSA DEN xD
     def enter_data(self, name, result, date=""):
         if len(result) < 1:
             raise ValueError("Enter valid score")
-        match = [name for path, fol_list, files in os.walk(COURSE_DATA_PATH) for folder in fol_list if name == folder]
+        match = search_course(name)
         if len(match) == 1:
             for res in result:
                 if isinstance(res, int):
@@ -71,6 +71,5 @@ class Player:
         return average
 
     # Onödig function?
-    # def calc_average(self): # FÖRKORTA OVANSTOENDE FUNCTION!
-    #     average = self.player_scores.copy()
+
 

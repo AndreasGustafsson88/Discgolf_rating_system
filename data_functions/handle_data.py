@@ -58,7 +58,7 @@ def sort_by_diff(s):
     return res
 
 
-def calc_average_by_hole1(s): # RETURNS A DICT BUT REALLY HARD TO SORT, CURRENTLY DOESN´T USE IT
+def calc_average_by_hole1(s): # RETURNS A DICT BUT REALLY HARD TO SORT, CURRENTLY DON'T USE IT
     d = s
     for k, v in d.items():
         for key, value in d[k].items():
