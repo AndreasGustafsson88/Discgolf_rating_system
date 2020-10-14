@@ -9,7 +9,6 @@ def plot_data(rating, score, course, color="Blue", x_label="RATING", y_label="SC
     plt.scatter(rating, score, color=color)
 
     coef = np.polyfit(rating, score, 1)
-
     predicted_ratings = [i for i in range(650, 1080)]
     predicted = np.polyval(coef, predicted_ratings)
 

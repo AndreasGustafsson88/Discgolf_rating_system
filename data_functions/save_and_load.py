@@ -122,17 +122,21 @@ def store_hole_stats(data, name):
         pickle.dump(data, file)
 
 
-def get_stats_from_file(path, file, stats):
+def check_and_append(v, stats, k, stored_stats):
+    for key, val in v.items():
+        if not val == stats[k][key] and not key == "PAR":
+            for num in stored_stats[k][key][1]:
+                stats[k][key][1].append(num)
+
+
+def get_stats_from_file(path, file, stats): # SEE IF THIS CAN BE litt penere
     with open(os.path.join(path, file), "rb") as stored:
         stored_stats = pickle.load(stored)
         for k, v in stored_stats.items():
             if k not in stats.keys():
                 stats[k] = stored_stats[k]
             else:
-                for key, val in v.items():
-                    if not val == stats[k][key] and not key == "PAR":
-                        for num in stored_stats[k][key][1]:
-                            stats[k][key][1].append(num)
+                check_and_append(v, stats, k, stored_stats) # Lyft ur hela else statemest, OK?!
 
 
 def load_hole_stats():

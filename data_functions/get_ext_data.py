@@ -35,20 +35,42 @@ def sort_rounds(name):
         return [[f"{i[1]} {i[2]}", i[3], int(i[4])] for i in csv.reader(score_card) if name.lower() in i[0].lower()]
 
 
+def create_or_add_to_dict(dict2, course, name, i):
+    if "Par" in i[0]:
+        if dict2[course] == {}:
+            dict2[course]["PAR"] = [int(i[4])]
+            dict2[course].update({j: [int(i[j + 5]), []] for j in range(1, 19) if i[j + 5].isnumeric()})
+    if name.lower() in i[0].lower():
+        try:
+            for j in range(1, 19):
+                dict2[course][j][1].append(int(i[j + 5]))
+        except KeyError:
+            print(f"{course}: Hole {j} could not be processed")
+
+
 def course_stats(name):
     dict2 = defaultdict(dict)
     with open(f"{PLAYER_PATH}\\{name}.csv", "r", encoding="utf-8") as score_card:
         for h, i in enumerate(csv.reader(score_card)):
             course = f"{i[1]} {i[2]}"
-            if "Par" in i[0]:
-                if dict2[course] == {}:
-                    dict2[course]["PAR"] = [int(i[4])]
-                    dict2[course].update({j: [int(i[j+5]), []] for j in range(1, 19) if i[j + 5].isnumeric()})
-            if name.lower() in i[0].lower():
-                try:
-                    for j in range(1, 19):
-                        dict2[course][j][1].append(int(i[j+5]))
-                except KeyError:
-                    continue
+            create_or_add_to_dict(dict2, course, name, i)
     return dict2
 
+# SHORTENED FUNCTION ABOVE, TRY OUT BEFORE COMPLETELY DELETE BELOW
+# def course_stats1(name):
+#     dict2 = defaultdict(dict)
+#     with open(f"{PLAYER_PATH}\\{name}.csv", "r", encoding="utf-8") as score_card:
+#         for h, i in enumerate(csv.reader(score_card)):
+#             course = f"{i[1]} {i[2]}"
+#             create_add_to_dict()
+#             if "Par" in i[0]:
+#                 if dict2[course] == {}:
+#                     dict2[course]["PAR"] = [int(i[4])]
+#                     dict2[course].update({j: [int(i[j + 5]), []] for j in range(1, 19) if i[j + 5].isnumeric()})
+#             if name.lower() in i[0].lower():
+#                 try:
+#                     for j in range(1, 19):
+#                         dict2[course][j][1].append(int(i[j + 5]))
+#                 except KeyError:
+#                     continue  # Might add print statement to see which stats are not being added
+#     return dict2

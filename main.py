@@ -1,5 +1,6 @@
 """
-Program that calculates a discgolfcource rating based on previus PDGA competitions on chosen course and layout
+Program that calculates a discgolf rating and convert that to a points system based on hole difficulty.
+rating is based on previous PDGA competitions on chosen course and layout.
 """
 
 from Classes.courses import Course
@@ -8,7 +9,7 @@ from Classes.players import Player
 from data_functions.save_and_load import player_data, course_data
 
 
-def main():
+def skynet_v_0001():
     # stovner = Course("Stovner Discgolfpark Main", "Oslo")
     # stovner.get_data("https://www.pdga.com/tour/event/41183")
     # stovner.load_data()
@@ -22,6 +23,9 @@ def main():
     krokhol.load_data()
     # krokhol.plot_data()
     # krokhol.show_course_rating()
+    # skatås = Course("skatås", "Gbg")
+    # skatås.get_data("https://www.pdga.com/tour/event/41900")
+    # skatås.plot_data()
 
     # ymer.plot_data()
     # ymer.plot_data()
@@ -30,6 +34,11 @@ def main():
     # gässlösa.plot_data()
     # gässlösa.merge_all()
 
+    andreas = Player("Andreas", "Gustafsson")
+    andreas.load_player()
+    benjamin = Player("Benjamin", "something")
+    benjamin.load_player()
+    benjamin.calc_rating(course="Stovner Discgolfpark Main")
     # andreas.load_player()
     # andreas.calc_rating()
 
@@ -47,7 +56,7 @@ def main():
     # main_db.get_throws("Daniel Johansson", "Krokhol Disc Golf Course Krokhol Regular Layout")
 
     # main_db.all_overview("karl persson")
-    # main_db.all_overview("andreas")
+    main_db.get_hole_average(course="Krokhol Disc Golf Course Krokhol Regular Layout")
     # main_db.store_hole_overview("karl persson")
     # main_db.store_hole_overview("andreas")
 
@@ -65,4 +74,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    skynet_v_0001()
