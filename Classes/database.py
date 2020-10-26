@@ -32,15 +32,15 @@ class Database:
                 difference = throws[0] - i[1][0]
                 if difference > 18:
                     new_diff = difference - 18
-                    holes = [i[j][0] for j in range(2, new_diff + 2)]
+                    holes = [int(i[j][0][:-1]) for j in range(2, new_diff + 2)]
                     print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
                           f"{i[1][0]}, your in for a ride, you get 1 extra throw on every hole and TWO extra on hole {holes}")
                 elif difference > 0:
-                    holes = [i[j][0] for j in range(2, difference + 2)]
+                    holes = [int(i[j][0][:-1]) for j in range(2, difference + 2)]
                     print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
                           f"{i[1][0]}, is a though one, you get 1 extra throw on hole {holes}")
                 if difference < 0:
-                    holes = [i[j][0] for j in range(-1, difference - 1, -1)]
+                    holes = [int(i[j][0][:-1]) for j in range(-1, difference - 1, -1)]
                     print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
                           f"{i[1][0]}, is cake for someone of your caliber! you need a birdie on {holes}")
                 if difference == 0:
