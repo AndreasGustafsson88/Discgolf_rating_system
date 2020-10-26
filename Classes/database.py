@@ -1,3 +1,4 @@
+import re
 from data_functions.get_ext_data import course_stats
 from data_functions.graph_rating_score import plot_player, plot_data
 from data_functions.handle_data import convert_ratings_to_dict, calc_average_by_hole, sort_by_diff
@@ -28,7 +29,7 @@ class Database:
         score_dict = convert_ratings_to_dict(rating, score, calc_player=True)
         throws = [int(round(k)) for k, v in score_dict.items() if player.rating == v]
         for i in self.hole_difficulty:
-            if course in i[0]:
+            if course in re.sub("[:]", "", i[0]):
                 difference = throws[0] - i[1][0]
                 if difference > 18:
                     new_diff = difference - 18
@@ -39,11 +40,11 @@ class Database:
                     holes = [int(i[j][0][:-1]) for j in range(2, difference + 2)]
                     print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
                           f"{i[1][0]}, is a though one, you get 1 extra throw on hole {holes}")
-                if difference < 0:
+                elif difference < 0:
                     holes = [int(i[j][0][:-1]) for j in range(-1, difference - 1, -1)]
                     print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
                           f"{i[1][0]}, is cake for someone of your caliber! you need a birdie on {holes}")
-                if difference == 0:
+                elif difference == 0:
                     print(f"{player.first_name} {player.last_name} currently rated {player.rating}. {course}, par "
                           f"{i[1][0]}, is just like its made for you! Just get through this on par and you´ll be fine")
 

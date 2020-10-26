@@ -12,6 +12,7 @@ class Player:
         self.player_scores = []
         self.rating = []
 
+
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"

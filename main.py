@@ -16,7 +16,7 @@ def skynet_v_0001():
     # stovner.merge_all()
     # holmenkollen.load_data()
     # holmenkollen.merge_all()
-    skatås = Course("Skatås Main","Gothenburg")
+    skatås = Course("Skatås Main", "Gothenburg")
     slottskogen = Course("Slottskogen 22 Hole Course", "Gothenburg")
 
     krokhol = Course("Krokhol Disc Golf Course Krokhol Regular Layout", "Oslo")
@@ -40,12 +40,11 @@ def skynet_v_0001():
     andreas = Player("Andreas", "Gustafsson")
     andreas.enter_data("Stovner Discgolfpark Main", [45, 55, 65])
     print(andreas.player_scores)
-
+    andreas.load_player()
     benjamin = Player("Benjamin", "something")
     benjamin.load_player()
     print(benjamin.player_scores)
     benjamin.calc_rating(course="Stovner Discgolfpark Main")
-    andreas.overview("andreas")
     # andreas.load_player()
     # andreas.calc_rating()
 
@@ -62,13 +61,16 @@ def skynet_v_0001():
     # main_db.get_throws("Daniel Johansson", "Krokhol Disc Golf Course Krokhol Regular Layout")
 
     # main_db.all_overview("karl persson")
-    main_db.get_hole_average(course="Krokhol Disc Golf Course Krokhol Regular Layout")
+
     # main_db.store_hole_overview("karl persson")
     # main_db.store_hole_overview("andreas")
 
     main_db.get_throws("Marius Dydland", "Stovner Discgolfpark Main")
     main_db.get_throws("Marius Dydland", "Holmenkollen DiscGolfpark Normal Oppsett")
     main_db.get_throws("Marius Dydland", "Gässlösa DGB Hole 1-18 (2020)")
+    andreas.overview("andreas")
+    main_db.get_throws("Andreas Gustafsson", "Ale Disc Golf Center White Course White")
+    main_db.get_hole_average(course="Krokhol Disc Golf Course Krokhol Regular Layout")
     # for k in main_db.hole_stats.keys():
     #    print(f"{k}: {main_db.hole_stats[k]}")
     # print(main_db.hole_stats)
