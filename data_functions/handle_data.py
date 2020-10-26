@@ -56,21 +56,3 @@ def sort_by_diff(s):
         temp.sort(key=lambda x: x[3], reverse=True)
         res.append(i[:2] + temp)
     return res
-
-
-def calc_average_by_hole1(s): # RETURNS A DICT BUT REALLY HARD TO SORT, CURRENTLY DON'T USE IT
-    d = s
-    for k, v in d.items():
-        for key, value in d[k].items():
-            if key == "PAR":
-                continue
-            elif value != [0, []]:
-                d[k][key][1] = round(sum(d[k][key][1]) / len(d[k][key][1]), 2)
-                res = round(d[k][key][1] - d[k][key][0], 2)
-                d[k][key].append(res)
-    print(d)
-    return d
-
-
-
-

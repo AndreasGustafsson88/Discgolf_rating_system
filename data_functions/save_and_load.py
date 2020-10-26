@@ -1,10 +1,7 @@
 import pickle
 import os
 import glob
-import collections.abc
 from collections import defaultdict
-from itertools import chain
-
 from data_functions.handle_data import convert_ratings_to_dict
 
 COURSE_DATA_PATH = "C:\\Kod\\Projekt\\Handicap system for Discgolf\\Course_data"
@@ -56,34 +53,6 @@ def player_data(player_name):
                 return get_file(name, path)
 
 
-def player_data1(player_name): # IS THIS BETTER?
-    match = [[path, name] for path, sub_folder, file_list in os.walk(PLAYER_DATA_PATH) for name in file_list if player_name in name]
-    with open(os.path.join(match[0][0], match[0][1]), "rb") as file:
-        return pickle.load(file)
-
-
-# def get_rating1(player_scores, rounds, course, all_rating=False): # FÖRSÖK SNYGGA TILL LYFT UT FOR LOOPAR
-#     ratings = []
-#     how_many_rounds = 0
-#     for values in player_scores:
-#         if how_many_rounds == rounds:
-#             return ratings
-#         for path, sub_folder, file_list in os.walk(COURSE_DATA_PATH):
-#             for name in file_list:
-#                 if values[0] in name and "ALL_ROUNDS" in name and course in name:
-#                     with open(os.path.join(path, name), "rb") as file:
-#                         average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
-#                         if all_rating:
-#                             try:
-#                                 ratings.append([values[1], average[values[2]]])
-#                             except KeyError:
-#                                 print(f"{values} round either rated too low or too high, must be between 500 or 1200")
-#                         else:
-#                             ratings.append(average[values[2]])
-#                             how_many_rounds += 1
-#     return ratings
-
-
 def add_to_list(all_rating, ratings, values, how_many_rounds, file):
     average = convert_ratings_to_dict(pickle.load(file), pickle.load(file))
     if all_rating:
@@ -129,14 +98,14 @@ def check_and_append(v, stats, k, stored_stats):
                 stats[k][key][1].append(num)
 
 
-def get_stats_from_file(path, file, stats): # SEE IF THIS CAN BE litt penere
+def get_stats_from_file(path, file, stats):
     with open(os.path.join(path, file), "rb") as stored:
         stored_stats = pickle.load(stored)
         for k, v in stored_stats.items():
             if k not in stats.keys():
                 stats[k] = stored_stats[k]
             else:
-                check_and_append(v, stats, k, stored_stats) # Lyft ur hela else statemest, OK?!
+                check_and_append(v, stats, k, stored_stats)
 
 
 def load_hole_stats():
