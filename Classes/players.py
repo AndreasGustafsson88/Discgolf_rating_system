@@ -1,6 +1,6 @@
 from datetime import datetime
 from typing import List
-from data_functions.get_ext_data import read_csv, sort_rounds
+from data_functions.get_ext_data import read_csv, sort_rounds, download
 import statistics
 from data_functions.save_and_load import store_player_data, player_data, get_rating, search_course
 
@@ -11,9 +11,9 @@ class Player:
         self.first_name = first_name
         self.last_name = last_name
         self.player_scores = []
-        self.rating = 0
         self._metrix_rating = 0
-        self.pdga_rating = 0
+        self._pdga_rating = 0
+        self.rating = 0
 
     @property
     def full_name(self):
@@ -32,6 +32,14 @@ class Player:
         all_data = read_csv(file_name)
         for key in all_data:
             print(f"{key}: {all_data[key]}")
+
+    @property
+    def pdga_rating(self):
+        return self._pdga_rating
+
+    @pdga_rating.setter
+    def pdga_rating(self, pdga_number):
+        self._pdga_rating = download(pdga_number, pdga=True)
 
     def calc_rating(self, rounds=20, course=""):
         rating, rounds = get_rating(self.player_scores, rounds, course)

@@ -40,6 +40,11 @@ def skynet_v_0001():
     andreas = Player("Andreas", "Gustafsson")
     andreas.enter_data("Stovner Discgolfpark Main", [45, 55, 65])
     andreas.metrix_rating = 902
+
+    andreas.pdga_rating = "115355"
+
+    print(andreas.rating)
+    print(andreas.pdga_rating)
     print(andreas.metrix_rating)
     print(andreas.player_scores)
     andreas.load_player()
