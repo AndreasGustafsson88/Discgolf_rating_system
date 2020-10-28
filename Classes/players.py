@@ -6,16 +6,26 @@ from data_functions.save_and_load import store_player_data, player_data, get_rat
 
 
 class Player:
+
     def __init__(self, first_name, last_name):
         self.first_name = first_name
         self.last_name = last_name
         self.player_scores = []
-        self.rating = []
-
+        self.rating = 0
+        self._metrix_rating = 0
+        self.pdga_rating = 0
 
     @property
     def full_name(self):
         return f"{self.first_name} {self.last_name}"
+
+    @property
+    def metrix_rating(self):
+        return self._metrix_rating
+
+    @metrix_rating.setter
+    def metrix_rating(self, rating):
+        self._metrix_rating = rating
 
     @staticmethod
     def overview(file_name):
@@ -58,13 +68,15 @@ class Player:
         match = search_course(name)
 
         if len(match) == 1:
+            all_rating = []
             for res in result:
                 rating, _ = get_rating([[match[0], date, res]], rounds=20, course="")
                 self.player_scores.append([name, date, res])
-                self.rating += rating
+                all_rating += rating
+            self.rating = int(statistics.mean(all_rating))
 
             # CHECK IF ALL ROUNDS WHERE ADDED, IF NOT THEN ROUND RESULT IS NOT VALID VALUE, EITHER TOO HIGH OR LOW
-            if len(self.rating) < len(result):
+            if len(all_rating) < len(result):
                 raise ValueError("The round mentioned above is either rated too high or low")
 
         else:

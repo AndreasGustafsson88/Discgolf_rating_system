@@ -57,7 +57,8 @@ class Database:
         self.hole_difficulty = calc_average_by_hole(self.hole_stats)
         if not course == "ALL":
             result = [self.hole_difficulty[i] for i, eni in enumerate(self.hole_difficulty) if course == eni[0]]
-            return print(result) # Kan jag returnera print för att den inte ska fortsätta vidare i metoden?
+            print(result)
+            return
         if sort:
             self.hole_difficulty = sort_by_diff(self.hole_difficulty)
         print("\n".join(f"{i}" for i in sorted(self.hole_difficulty)))
